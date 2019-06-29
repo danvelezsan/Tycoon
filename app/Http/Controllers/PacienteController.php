@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Paciente;
@@ -16,17 +17,29 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        //
+        echo "Home berraco!";
+    }
+
+    public function registrarPaciente()
+    {
+        return view('/paciente/registrarPaciente');
+    }
+
+    public function listarPacientes()
+    {
+        return view('/paciente/listarPacientes');
     }
 
     /**
      * Show the form for creating a new resource.
+     * MANDA AL MODELO LOS DATOS PARA CREAR EN LA BASE DE DATOS EL REGISTRO
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('pacientes.create');
+        echo "create pues!";
+        //
     }
 
     /**
@@ -57,10 +70,10 @@ class PacienteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Paciente $paciente)
     {
         //
     }
@@ -68,10 +81,10 @@ class PacienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Paciente $paciente)
     {
         //
     }
@@ -80,10 +93,10 @@ class PacienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Paciente $paciente)
     {
         //
     }
@@ -91,10 +104,10 @@ class PacienteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Paciente $paciente)
     {
         //
     }
