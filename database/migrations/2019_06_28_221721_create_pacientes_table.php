@@ -14,11 +14,12 @@ class CreatePacientesTable extends Migration
     public function up()
     {
         Schema::create('pacientes', function (Blueprint $table) {
-            $table->integer('id');
+            $table->integer('cedula');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->date('fecha_nacimiento');
-            $table->string('genero');
+            $table->date('fechaNac');
+            $table->char('genero');
+            $table->timestamps();
         });
     }
 
