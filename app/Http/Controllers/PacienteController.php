@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Paciente;
+use App\User;
 
 class PacienteController extends Controller
 {
@@ -34,7 +37,21 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paciente = new Paciente([
+            'cedula' => $request->get('id'),
+            'nombre' => $request->get('nombre'),
+            'apellidos' => $request->get('apellidos'),
+            'fecha_nacimiento' => $request->get('fecha_nacimiento'),
+            'genero' => $request->get('genero'),
+        ]);
+        $paciente->save();
+        $user = new User([
+            'cedula' => $request->get('id'),
+            'name' => $request->get('nombre'),
+            'password' =>  Hash::make("12345678"),
+        ]);
+        $user->save();
+        return redirect('/')->with('success', 'Paciente Registrado Exitosamente');
     }
 
     /**
