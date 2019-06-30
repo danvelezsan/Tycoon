@@ -48,7 +48,7 @@ class PacienteController extends Controller
         $user = new User([
             'id' => $request->get('cedula'),
             'name' => $request->get('nombre'),
-            'password' =>  Hash::make("contrasena"),
+            'password' =>  $request->get('contrasena'),
         ]);
         $user->save();
         return redirect('/')->with('success', 'Paciente Registrado Exitosamente');
