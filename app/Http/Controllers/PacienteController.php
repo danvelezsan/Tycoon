@@ -61,9 +61,10 @@ class PacienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $pacientes = Paciente::orderBy('cedula', 'DESC')->get();
+        return view('pacientes.show')->with('pacientes', $pacientes);
     }
 
     /**
@@ -97,7 +98,12 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete($id);
+        Paciente::find($id)->delete($id);
+
+        
+
+        return redirect()->back()->with('success', 'Se ha eliminado correctamente');
     }
 
      /**

@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/pacientes/registrarPaciente', 'PacienteController@create');
 Route::get('/pacientes/listarPacientes', 'PacienteController@show');
+Route::delete('/pacientes/eliminarPaciente/{cedula}', 'PacienteController@destroy');
 
 Route::resource('pacientes', 'PacienteController');
 
