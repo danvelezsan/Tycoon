@@ -15,7 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('pacientes', 'PacienteController');
 Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/pacientes/registrarPaciente', 'PacienteController@create');
+Route::get('/pacientes/listarPacientes', 'PacienteController@show');
+
+Route::resource('pacientes', 'PacienteController');
+
 
