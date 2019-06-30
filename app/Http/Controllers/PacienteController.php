@@ -38,7 +38,7 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         $paciente = new Paciente([
-            'cedula' => $request->get('id'),
+            'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),
             'apellidos' => $request->get('apellidos'),
             'fecha_nacimiento' => $request->get('fecha_nacimiento'),
@@ -46,7 +46,7 @@ class PacienteController extends Controller
         ]);
         $paciente->save();
         $user = new User([
-            'cedula' => $request->get('id'),
+            'id' => $request->get('cedula'),
             'name' => $request->get('nombre'),
             'password' =>  Hash::make("contrasena"),
         ]);

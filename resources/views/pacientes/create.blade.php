@@ -12,12 +12,12 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="id" class="col-md-4 col-form-label text-md-right">Cédula</label>
+                            <label for="cedula" class="col-md-4 col-form-label text-md-right">Cédula</label>
 
                             <div class="col-md-6">
-                                <input id="id" type="number" class="form-control @error('id') is-invalid @enderror" name="id" value="{{ old('id') }}" required autocomplete="id" autofocus placeholder="Ingrese su cédula" min="0">
+                                <input id="cedula" type="number" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus placeholder="Ingrese su cédula" min="0">
 
-                                @error('id')
+                                @error('cedula')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
