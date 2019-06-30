@@ -7,7 +7,7 @@
         <div class="col-md-11">
         	<div class="card">
 	        	<div class="card-header" style="background: #353942;">
-	        		<br>
+	        		<p></p>
 	        		<div class="container">
 		        		<div class="row">
 			        		<div class="col-sm-9">
@@ -31,6 +31,7 @@
 						      	<th scope="col" style="text-align:center">Apellidos</th>
 						      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
 						      	<th scope="col" style="text-align:center">Género</th>
+						      	<th scope="col" style="text-align:center"></th>
 		    				</tr>
 				  		</thead>
 				  		<tbody>
@@ -41,6 +42,12 @@
 				  					<td style="text-align:center">{{ $paciente -> apellidos }}</td>
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
 				  					<td style="text-align:center">{{ $paciente -> genero }}</td>
+				  					<td style="text-align:center">
+				  						<form method="POST" action="{{ url('/pacientes/eliminarPaciente', ['id' => $paciente->cedula]) }}">
+				  							<input type="hidden" name="_method" value="delete	">
+				  							<button type="submit" class="btn btn-outline-success">Eliminar</button>
+				  						</form>
+				  					</td>
 				  				</tr>
 				  			@endforeach
 		  				</tbody>

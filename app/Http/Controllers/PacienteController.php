@@ -48,7 +48,7 @@ class PacienteController extends Controller
         $user = new User([
             'id' => $request->get('cedula'),
             'name' => $request->get('nombre'),
-            'password' =>  $request->get('contrasena'),
+            'password' =>  Hash::make($request->get('contrasena')),
         ]);
         $user->save();
         return redirect('/')->with('success', 'Paciente Registrado Exitosamente');
@@ -97,7 +97,12 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete($id);
+        Paciente::find($id)->delete($id);
+
+        
+
+        return redirect()->back()->with('success', 'Se ha eliminado correctamente');
     }
 
      /**
