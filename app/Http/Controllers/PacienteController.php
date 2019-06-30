@@ -48,7 +48,7 @@ class PacienteController extends Controller
         $user = new User([
             'cedula' => $request->get('id'),
             'name' => $request->get('nombre'),
-            'password' =>  Hash::make("12345678"),
+            'password' =>  Hash::make("contrasena"),
         ]);
         $user->save();
         return redirect('/')->with('success', 'Paciente Registrado Exitosamente');
@@ -97,5 +97,18 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'contrasena' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 }

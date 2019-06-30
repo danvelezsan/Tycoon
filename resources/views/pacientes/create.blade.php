@@ -26,6 +26,28 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="contrasena" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="contrasena" type="password" class="form-control @error('contrasena') is-invalid @enderror" name="contrasena" value="{{ old('contrasena') }}" required autocomplete="constrasena" autofocus min="0" placeholder="Ingrese su contraseña">
+
+                                @error('contrasena')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="contrasena-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="contrasena-confirm" type="password" class="form-control" name="contrasena-confirm" required autocomplete="new-contrasena" placeholder="Confirme la constraseña">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
