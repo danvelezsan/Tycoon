@@ -46,7 +46,7 @@
 										<form action="{{ route('pacientes.destroy', $paciente->cedula)}}" method="post">
                						 		@csrf
                   							@method('DELETE')
-                  							<button class="btn btn-outline-danger" type="submit">Delete</button>
+                  							<button class="btn btn-outline-danger" type="submit">Eliminar</button>
                 					   </form>
 				  					</td>
 				  				</tr>

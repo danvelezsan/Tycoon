@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar Médico General') }}</div>
+                <div class="card-header">
+                    {{ __('Registrar Médico General') }}
+                    <button type="button" onclick="window.location='/medicosGenerales/listarMedicosGenerales'" class="btn btn-outline-primary float-right">Volver</button>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('medicosGenerales.store') }}">
@@ -101,10 +104,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="tarjeta_profesional" class="col-md-4 col-form-label text-md-right">Cédula</label>
+                            <label for="tarjeta_profesional" class="col-md-4 col-form-label text-md-right">Nro. tarjeta profesional</label>
 
                             <div class="col-md-6">
-                                <input id="tarjeta_profesional" type="number" class="form-control @error('tarjeta_profesional') is-invalid @enderror" name="tarjeta_profesional" value="{{ old('tarjeta_profesional') }}" required autocomplete="tarjeta_profesional" autofocus placeholder="Ingrese su cédula" min="0">
+                                <input id="tarjeta_profesional" type="number" class="form-control @error('tarjeta_profesional') is-invalid @enderror" name="tarjeta_profesional" value="{{ old('tarjeta_profesional') }}" required autocomplete="tarjeta_profesional" autofocus placeholder="Ingrese nro. de tarjeta profesional" min="0">
 
                                 @error('tarjeta_profesional')
                                     <span class="invalid-feedback" role="alert">
@@ -115,10 +118,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="titulo" class="col-md-4 col-form-label text-md-right">{{ __('Titulo') }}</label>
+                            <label for="titulo" class="col-md-4 col-form-label text-md-right">{{ __('Nombre del título') }}</label>
 
                             <div class="col-md-6">
-                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus placeholder="Ingrese sus titulo">
+                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus placeholder="Ingrese su título">
 
                                 @error('titulo')
                                     <span class="invalid-feedback" role="alert">

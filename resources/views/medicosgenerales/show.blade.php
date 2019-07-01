@@ -31,6 +31,8 @@
 						      	<th scope="col" style="text-align:center">Apellidos</th>
 						      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
 						      	<th scope="col" style="text-align:center">Género</th>
+						      	<th scope="col" style="text-align:center">Nro. tarjeta profesional</th>
+						      	<th scope="col" style="text-align:center">Título profesional</th>
 						      	<th scope="col" style="text-align:center"></th>
 		    				</tr>
 				  		</thead>
@@ -42,11 +44,13 @@
 				  					<td style="text-align:center">{{ $medico -> apellidos }}</td>
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($medico->fecha_nacimiento)->format('d/m/Y') }}</td>
 				  					<td style="text-align:center">{{ $medico -> genero }}</td>
+				  					<td style="text-align:center">{{ $medico -> tarjeta_profesional }}</td>
+				  					<td style="text-align:center">{{ $medico -> titulo }}</td>
 				  					<td style="text-align:center">
 										<form action="{{ route('medicosGenerales.destroy', $medico->cedula)}}" method="post">
                						 		@csrf
                   							@method('DELETE')
-                  							<button class="btn btn-danger" type="submit">Delete</button>
+                  							<button class="btn btn-outline-danger" type="submit">Delete</button>
                 					   </form>
 				  					</td>
 				  				</tr>

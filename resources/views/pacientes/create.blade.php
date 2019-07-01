@@ -8,9 +8,7 @@
                 <div class="card-header">
                     {{ __('Registrar Paciente') }} 
                     <button type="button" onclick="window.location='/pacientes/listarPacientes'" class="btn btn-outline-primary float-right">Volver</button>
-
                 </div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('pacientes.store') }}">
                         @csrf

@@ -55,7 +55,7 @@ class MedicoGeneralController extends Controller
             'role' => "MedicoGeneral",
         ]);
         $user->save();
-        return redirect('/')->with('success');
+        return redirect('/medicosGenerales/listarMedicosGenerales')->with('success');
     }
 
     /**
@@ -101,6 +101,28 @@ class MedicoGeneralController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $medico = MedicoGeneral::where('cedula', $id);
+
+        $user->delete();
+        $medico->delete();
+
+        if ($user->delete()) {
+            Session::flash('message', '¡Usuario eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        if ($medico->delete()) {
+            Session::flash('message', '¡Médico general eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        return redirect('/medicosGenerales/listarMédicosGenerales')->with('success');
     }
 }
