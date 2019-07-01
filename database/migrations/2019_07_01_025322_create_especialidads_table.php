@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMedicoGeneralsTable extends Migration
+class CreateEspecialidadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateMedicoGeneralsTable extends Migration
      */
     public function up()
     {
-        Schema::create('medico_generals', function (Blueprint $table) {
-            $table->integer('cedula')->unique();
+        Schema::create('especialidads', function (Blueprint $table) {
+            $table->integer('codigo')->unique();
             $table->string('nombre');
-            $table->string('apellidos');
-            $table->date('fecha_nacimiento');
-            $table->string('genero');
-            $table->integer('tarjeta_profesional');
-            $table->string('titulo');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateMedicoGeneralsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medico_generals');
+        Schema::dropIfExists('especialidads');
     }
 }

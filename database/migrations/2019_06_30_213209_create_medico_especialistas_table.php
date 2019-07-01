@@ -20,6 +20,9 @@ class CreateMedicoEspecialistasTable extends Migration
             $table->date('fecha_nacimiento');
             $table->string('genero');
             $table->integer('tarjeta_profesional');
+            $table->string('dirConsultorio');
+            $table->string('titulo');
+            $table->string('especialidad');      
             $table->timestamps();
         });
     }

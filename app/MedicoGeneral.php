@@ -9,7 +9,7 @@ class MedicoGeneral extends Model
     public $timestamp = false;
 
     protected $fillable = [
-        'cedula', 'nombre', 'apellidos','fecha_nacimiento','genero', 'tarjeta_profesional'
+        'cedula', 'nombre', 'apellidos','fecha_nacimiento','genero', 'tarjeta_profesional', 'titulo'
     ];
 
     protected $casts = [
