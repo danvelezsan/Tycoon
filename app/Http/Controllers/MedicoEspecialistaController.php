@@ -27,7 +27,7 @@ class MedicoEspecialistaController extends Controller
      */
     public function create()
     {
-        return view('medicoEspecialistas.create');
+        return view('medicosEspecialistas.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class MedicoEspecialistaController extends Controller
      */
     public function store(Request $request)
     {
-        $medicoEspecialista = new medicoGeneral([
+        $medicoEspecialista = new medicoEspecialista([
             'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),
             'apellidos' => $request->get('apellidos'),
@@ -65,9 +65,10 @@ class MedicoEspecialistaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $medicosEspecialistas = MedicoEspecialista::orderBy('cedula', 'DESC')->get();
+        return view('medicosEspecialistas.show')->with('medicosEspecialistas', $medicosEspecialistas);
     }
 
     /**

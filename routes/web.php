@@ -27,8 +27,8 @@ Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@
 Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy');
 Route::resource('medicosGenerales', 'MedicoGeneralController');
 
-Route::get('/medicoEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create');
-Route::get('/medicoEspecialistas/listarMedicoEspecialistas', 'MedicoEspecialistaController@show');
-Route::delete('/medicoEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy');
-Route::resource('medicoEspecialistas', 'MedicoEspecialistaController');
+Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create');
+Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show');
+Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy');
+Route::resource('medicosEspecialistas', 'MedicoEspecialistaController');
 

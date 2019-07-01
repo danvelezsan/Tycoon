@@ -41,7 +41,7 @@
                             <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Médicos Especialistas</a>
+                            <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
                         </li>
                     </ul>
 
