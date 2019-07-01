@@ -4,7 +4,7 @@
 <br>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-11">
+        <div class="col-md-10">
         	<div class="card">
 	        	<div class="card-header" style="background: #353942;">
 	        		<p></p>

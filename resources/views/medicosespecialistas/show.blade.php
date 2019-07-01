@@ -4,14 +4,14 @@
 <br>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-11">
+        <div class="col-md-12">
         	<div class="card">
 	        	<div class="card-header" style="background: #353942;">
 	        		<p></p>
 	        		<div class="container">
 		        		<div class="row">
 			        		<div class="col-sm-8">
-			        			<h4 style="color:white;">Listar Médico Especialista</h4>
+			        			<h4 style="color:white;">Listar Médicos Especialistas</h4>
 				       		</div>
 			        		<div class="col-sm-4">
 			        			<div class="float-right">
@@ -31,6 +31,10 @@
 						      	<th scope="col" style="text-align:center">Apellidos</th>
 						      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
 						      	<th scope="col" style="text-align:center">Género</th>
+						      	<th scope="col" style="text-align:center">Nro. tarjeta profesional</th>
+						      	<th scope="col" style="text-align:center">Título profesional</th>
+						      	<th scope="col" style="text-align:center">Especialidad</th>
+						      	<th scope="col" style="text-align:center">Dirección de consultorio</th>
 						      	<th scope="col" style="text-align:center"></th>
 		    				</tr>
 				  		</thead>
@@ -42,6 +46,10 @@
 				  					<td style="text-align:center">{{ $medico -> apellidos }}</td>
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($medico->fecha_nacimiento)->format('d/m/Y') }}</td>
 				  					<td style="text-align:center">{{ $medico -> genero }}</td>
+				  					<td style="text-align:center">{{ $medico -> tarjeta_profesional }}</td>
+				  					<td style="text-align:center">{{ $medico -> titulo }}</td>
+				  					<td style="text-align:center">{{ $medico -> especialidad }}</td>
+				  					<td style="text-align:center">{{ $medico -> dirConsultorio }}</td>
 				  					<td style="text-align:center">
 										<form action="{{ route('medicosEspecialistas.destroy', $medico->cedula)}}" method="post">
                						 		@csrf

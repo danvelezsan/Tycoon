@@ -46,6 +46,7 @@ class MedicoEspecialistaController extends Controller
             'genero' => $request->get('genero'),
             'tarjeta_profesional' => $request->get('tarjeta_profesional'),
             'titulo' => $request->get('titulo'),
+            'dirConsultorio' => $request->get('dirConsultorio'),
             'especialidad' => $request->get('especialidad'),
         ]);
         $medicoEspecialista->save();
@@ -56,7 +57,7 @@ class MedicoEspecialistaController extends Controller
             'role' => "MedicoEspecialista",
         ]);
         $user->save();
-        return redirect('/')->with('success');
+        return redirect('/medicosEspecialistas/listarMedicosEspecialistas')->with('success');
     }
 
     /**
@@ -102,6 +103,28 @@ class MedicoEspecialistaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $medico = MedicoEspecialista::where('cedula', $id);
+
+        $user->delete();
+        $medico->delete();
+
+        if ($user->delete()) {
+            Session::flash('message', '¡Usuario eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        if ($medico->delete()) {
+            Session::flash('message', '¡Médico especialista eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        return redirect('/medicosEspecialistas/listarMedicosEspecialistas')->with('success');
     }
 }

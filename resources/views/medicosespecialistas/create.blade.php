@@ -5,10 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar Paciente') }}</div>
-
+                <div class="card-header">
+                    {{ __('Registrar Médico Especialista') }}
+                    <button type="button" onclick="window.location='/medicosEspecialistas/listarMedicosEspecialistas'" class="btn btn-outline-primary float-right">Volver</button>
+                </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('medicoEspecialistas.store') }}">
+                    <form method="POST" action="{{ route('medicosEspecialistas.store') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -101,10 +103,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="tarjeta_profesional" class="col-md-4 col-form-label text-md-right">Cédula</label>
+                            <label for="tarjeta_profesional" class="col-md-4 col-form-label text-md-right">Nro. tarjeta profesional</label>
 
                             <div class="col-md-6">
-                                <input id="tarjeta_profesional" type="number" class="form-control @error('tarjeta_profesional') is-invalid @enderror" name="tarjeta_profesional" value="{{ old('tarjeta_profesional') }}" required autocomplete="tarjeta_profesional" autofocus placeholder="Ingrese su cédula" min="0">
+                                <input id="tarjeta_profesional" type="number" class="form-control @error('tarjeta_profesional') is-invalid @enderror" name="tarjeta_profesional" value="{{ old('tarjeta_profesional') }}" required autocomplete="tarjeta_profesional" autofocus placeholder="Ingrese nro. de tarjeta profesional" min="0">
 
                                 @error('tarjeta_profesional')
                                     <span class="invalid-feedback" role="alert">
@@ -115,10 +117,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="titulo" class="col-md-4 col-form-label text-md-right">{{ __('Titulo') }}</label>
+                            <label for="titulo" class="col-md-4 col-form-label text-md-right">{{ __('Nombre del título') }}</label>
 
                             <div class="col-md-6">
-                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus placeholder="Ingrese sus titulo">
+                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus placeholder="Ingrese su título">
 
                                 @error('titulo')
                                     <span class="invalid-feedback" role="alert">
@@ -129,10 +131,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="especialidad" class="col-md-4 col-form-label text-md-right">{{ __('Especialidad') }}</label>
+                            <label for="especialidad" class="col-md-4 col-form-label text-md-right">{{ __('Especialidad médica') }}</label>
 
                             <div class="col-md-6">
-                                <input id="especialidad" type="text" class="form-control @error('especialidad') is-invalid @enderror" name="especialidad" value="{{ old('especialidad') }}" required autocomplete="especialidad" autofocus placeholder="Ingrese sus especialidad">
+                                <input id="especialidad" type="text" class="form-control @error('especialidad') is-invalid @enderror" name="especialidad" value="{{ old('especialidad') }}" required autocomplete="especialidad" autofocus placeholder="Ingrese la especialidad">
 
                                 @error('especialidad')
                                     <span class="invalid-feedback" role="alert">
@@ -142,7 +144,19 @@
                             </div>
                         </div>
 
-                        
+                        <div class="form-group row">
+                            <label for="dirConsultorio" class="col-md-4 col-form-label text-md-right">{{ __('Dirección del consultorio') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="dirConsultorio" type="text" class="form-control @error('dirConsultorio') is-invalid @enderror" name="dirConsultorio" value="{{ old('dirConsultorio') }}" required autocomplete="dirConsultorio" autofocus placeholder="Ingrese la dirección del consultorio">
+
+                                @error('dirConsultorio')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
