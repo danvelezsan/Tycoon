@@ -97,12 +97,29 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete($id);
-        Paciente::find($id)->delete($id);
+        $user = User::find($id);
+        $paciente = Paciente::find($id);
 
-        
+        $user->delete();
+        $paciente->delete();
 
-        return redirect()->back()->with('success', 'Se ha eliminado correctamente');
+        if ($user->delete()) {
+            Session::flash('message', '¡Usuario eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        if ($paciente->delete()) {
+            Session::flash('message', '¡Paciente eliminado correctamente!');
+            Session::flash('class', 'success');
+        } else {
+            Session::flash('message', '¡Ha ocurrido un error!');
+            Session::flash('class', 'danger');
+        }
+
+        return view('pacientes.show');
     }
 
      /**

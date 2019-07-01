@@ -44,7 +44,7 @@
 				  					<td style="text-align:center">{{ $paciente -> genero }}</td>
 				  					<td style="text-align:center">
 				  						<form method="POST" action="{{ url('/pacientes/eliminarPaciente', ['id' => $paciente->cedula]) }}">
-				  							<input type="hidden" name="_method" value="delete	">
+				  							<input type="hidden" name="_method" value="delete">
 				  							<button type="submit" class="btn btn-outline-success">Eliminar</button>
 				  						</form>
 				  					</td>
