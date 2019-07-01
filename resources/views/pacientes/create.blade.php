@@ -5,7 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar Paciente') }}</div>
+                <div class="card-header">
+                    {{ __('Registrar Paciente') }} 
+                    <button type="button" onclick="window.location='/pacientes/listarPacientes'" class="btn btn-outline-primary float-right">Volver</button>
+
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('pacientes.store') }}">

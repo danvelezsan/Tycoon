@@ -27,7 +27,7 @@ class MedicoGeneralController extends Controller
      */
     public function create()
     {
-        return view('medicoGenerals.create');
+        return view('medicosGenerales.create');
     }
 
     /**
@@ -64,9 +64,10 @@ class MedicoGeneralController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $medicosGenerales = MedicoGeneral::orderBy('cedula', 'DESC')->get();
+        return view('medicosgenerales.show')->with('medicosGenerales', $medicosGenerales);
     }
 
     /**

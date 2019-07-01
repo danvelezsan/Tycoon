@@ -11,11 +11,11 @@
 	        		<div class="container">
 		        		<div class="row">
 			        		<div class="col-sm-9">
-			        			<h4 style="color:white;">Listar Pacientes</h4>
+			        			<h4 style="color:white;">Listar Médicos Generales</h4>
 				       		</div>
 			        		<div class="col-sm-3">
 			        			<div class="float-right">
-			        				<button onclick="window.location='/pacientes/registrarPaciente'" type="button" class="btn btn-secondary">Registrar Paciente</button>
+			        				<button onclick="window.location='/medicosGenerales/registrarMedicoGeneral'" type="button" class="btn btn-secondary">Registrar Médico General</button>
 			        			</div>
 			        		</div>
 		        		</div>
@@ -35,15 +35,15 @@
 		    				</tr>
 				  		</thead>
 				  		<tbody>
-				  			@foreach($pacientes as $paciente)
+				  			@foreach($medicosGenerales as $medico)
 				  				<tr>
-				  					<th style="text-align:center">{{ $paciente -> cedula }}</th>
-				  					<td style="text-align:center">{{ $paciente -> nombre }}</td>
-				  					<td style="text-align:center">{{ $paciente -> apellidos }}</td>
-				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
-				  					<td style="text-align:center">{{ $paciente -> genero }}</td>
+				  					<th style="text-align:center">{{ $medico -> cedula }}</th>
+				  					<td style="text-align:center">{{ $medico -> nombre }}</td>
+				  					<td style="text-align:center">{{ $medico -> apellidos }}</td>
+				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($medico->fecha_nacimiento)->format('d/m/Y') }}</td>
+				  					<td style="text-align:center">{{ $medico -> genero }}</td>
 				  					<td style="text-align:center">
-										<form action="{{ route('pacientes.destroy', $paciente->cedula)}}" method="post">
+										<form action="{{ route('medicosGenerales.destroy', $medico->cedula)}}" method="post">
                						 		@csrf
                   							@method('DELETE')
                   							<button class="btn btn-danger" type="submit">Delete</button>

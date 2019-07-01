@@ -22,10 +22,10 @@ Route::get('/pacientes/listarPacientes', 'PacienteController@show');
 Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy');
 Route::resource('pacientes', 'PacienteController');
 
-Route::get('/medicoGenerals/registrarMedicoGeneral', 'MedicoGeneralController@create');
-Route::get('/medicoGenerals/listarMedicoGenerals', 'MedicoGeneralController@show');
-Route::delete('/medicoGenerals/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy');
-Route::resource('medicoGenerals', 'MedicoGeneralController');
+Route::get('/medicosGenerales/registrarMedicoGeneral', 'MedicoGeneralController@create');
+Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@show');
+Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy');
+Route::resource('medicosGenerales', 'MedicoGeneralController');
 
 Route::get('/medicoEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create');
 Route::get('/medicoEspecialistas/listarMedicoEspecialistas', 'MedicoEspecialistaController@show');
