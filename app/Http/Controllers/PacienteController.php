@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use App\Paciente;
 use App\User;
 
@@ -52,7 +53,7 @@ class PacienteController extends Controller
             'role' => "paciente",
         ]);
         $user->save();
-        return redirect('/')->with('success', 'Paciente Registrado Exitosamente');
+        return redirect('/')->with('success');
     }
 
     /**
@@ -99,7 +100,7 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $paciente = Paciente::find($id);
+        $paciente = Paciente::where('cedula', $id);
 
         $user->delete();
         $paciente->delete();
@@ -120,7 +121,7 @@ class PacienteController extends Controller
             Session::flash('class', 'danger');
         }
 
-        return view('pacientes.show');
+        return redirect('/pacientes/listarPacientes')->with('success');
     }
 
      /**
