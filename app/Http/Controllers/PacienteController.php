@@ -50,10 +50,10 @@ class PacienteController extends Controller
             'id' => $request->get('cedula'),
             'name' => $request->get('nombre'),
             'password' => Hash::make($request->get('contrasena')),
-            'role' => "paciente",
+            'role' => "Paciente",
         ]);
         $user->save();
-        return redirect('/')->with('success');
+        return redirect('/pacientes/listarPacientes')->with('success');
     }
 
     /**

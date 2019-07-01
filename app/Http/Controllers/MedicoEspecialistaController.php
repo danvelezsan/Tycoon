@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use App\MedicoEspecialista;
+use App\User;
 
 class MedicoEspecialistaController extends Controller
 {
@@ -23,7 +27,7 @@ class MedicoEspecialistaController extends Controller
      */
     public function create()
     {
-        //
+        return view('medicoEspecialistas.create');
     }
 
     /**
@@ -34,7 +38,25 @@ class MedicoEspecialistaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $medicoEspecialista = new medicoGeneral([
+            'cedula' => $request->get('cedula'),
+            'nombre' => $request->get('nombre'),
+            'apellidos' => $request->get('apellidos'),
+            'fecha_nacimiento' => $request->get('fecha_nacimiento'),
+            'genero' => $request->get('genero'),
+            'tarjeta_profesional' => $request->get('tarjeta_profesional'),
+            'titulo' => $request->get('titulo'),
+            'especialidad' => $request->get('especialidad'),
+        ]);
+        $medicoEspecialista->save();
+        $user = new User([
+            'id' => $request->get('cedula'),
+            'name' => $request->get('nombre'),
+            'password' => Hash::make($request->get('contrasena')),
+            'role' => "MedicoEspecialista",
+        ]);
+        $user->save();
+        return redirect('/')->with('success');
     }
 
     /**
