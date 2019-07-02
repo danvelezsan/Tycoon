@@ -53,6 +53,9 @@ class PacienteController extends Controller
             'role' => "Paciente",
         ]);
         $user->save();
+
+        session()->flash('registrado', 'El paciente se ha creado correctamente');
+
         return redirect('/pacientes/listarPacientes')->with('success');
     }
 
@@ -121,7 +124,9 @@ class PacienteController extends Controller
             Session::flash('class', 'danger');
         }
 
-        return redirect('/pacientes/listarPacientes')->with('success');
+        session()->flash('eliminado', 'El paciente se ha eliminado correctamente');
+
+        return redirect('/pacientes/listarPacientes')->with('success','heee heeeee');
     }
 
      /**

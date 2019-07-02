@@ -57,6 +57,9 @@ class MedicoEspecialistaController extends Controller
             'role' => "MedicoEspecialista",
         ]);
         $user->save();
+
+        session()->flash('registrado', 'El médico especialista se ha creado correctamente');
+
         return redirect('/medicosEspecialistas/listarMedicosEspecialistas')->with('success');
     }
 
@@ -124,6 +127,8 @@ class MedicoEspecialistaController extends Controller
             Session::flash('message', '¡Ha ocurrido un error!');
             Session::flash('class', 'danger');
         }
+
+        session()->flash('eliminado', 'El médico especialista se ha eliminado correctamente');
 
         return redirect('/medicosEspecialistas/listarMedicosEspecialistas')->with('success');
     }

@@ -5,6 +5,22 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+        	@if (session()->has('registrado'))
+			<div class="container">
+				<div class="alert alert-success alert-block">
+					<button type="button" class="close" data-dismiss="alert">×</button>	
+	        		<span class="glyphicon glyphicon-ok"><strong>¡El médico especialista ha sido registrado correctamente!</strong>
+				</div>
+			</div>
+			@endif
+			@if (session()->has('eliminado'))
+			<div class="container">
+				<div class="alert alert-success alert-block">
+					<button type="button" class="close" data-dismiss="alert">×</button>	
+	        		<span class="glyphicon glyphicon-ok"><strong>¡El médico especialista ha sido eliminado correctamente!</strong>
+				</div>
+			</div>
+			@endif
         	<div class="card">
 	        	<div class="card-header" style="background: #353942;">
 	        		<p></p>

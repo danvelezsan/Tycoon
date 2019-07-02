@@ -55,6 +55,9 @@ class MedicoGeneralController extends Controller
             'role' => "MedicoGeneral",
         ]);
         $user->save();
+
+        session()->flash('registrado', 'El médico general se ha creado correctamente');
+
         return redirect('/medicosGenerales/listarMedicosGenerales')->with('success');
     }
 
@@ -122,6 +125,8 @@ class MedicoGeneralController extends Controller
             Session::flash('message', '¡Ha ocurrido un error!');
             Session::flash('class', 'danger');
         }
+
+        session()->flash('eliminado', 'El médico general se ha eliminado correctamente');
 
         return redirect('/medicosGenerales/listarMédicosGenerales')->with('success');
     }
