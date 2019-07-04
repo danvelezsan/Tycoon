@@ -48,7 +48,7 @@
 						      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
 						      	<th scope="col" style="text-align:center">Género</th>
 						      	<th scope="col" style="text-align:center">Nro. tarjeta profesional</th>
-						      	<th scope="col" style="text-align:center">Título profesional</th>
+						      	<th scope="col" style="text-align:center">Universidad</th>
 						      	<th scope="col" style="text-align:center">Especialidad</th>
 						      	<th scope="col" style="text-align:center">Dirección de consultorio</th>
 						      	<th scope="col" style="text-align:center"></th>
@@ -63,7 +63,7 @@
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($medico->fecha_nacimiento)->format('d/m/Y') }}</td>
 				  					<td style="text-align:center">{{ $medico -> genero }}</td>
 				  					<td style="text-align:center">{{ $medico -> tarjeta_profesional }}</td>
-				  					<td style="text-align:center">{{ $medico -> titulo }}</td>
+				  					<td style="text-align:center">{{ $medico -> universidad }}</td>
 				  					<td style="text-align:center">{{ $medico -> especialidad }}</td>
 				  					<td style="text-align:center">{{ $medico -> dirConsultorio }}</td>
 				  					<td style="text-align:center">

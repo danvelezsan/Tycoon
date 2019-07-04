@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MedicoGeneral extends Model
 {
     protected $fillable = [
-        'cedula', 'nombre', 'apellidos','fecha_nacimiento','genero', 'tarjeta_profesional', 'titulo'
+        'cedula', 'nombre', 'apellidos','fecha_nacimiento','genero', 'tarjeta_profesional', 'universidad'
     ];
 
     protected $casts = [

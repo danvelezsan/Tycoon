@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\MedicoGeneral;
+use App\Universidad;
 use App\User;
 
 class MedicoGeneralController extends Controller
@@ -27,7 +28,8 @@ class MedicoGeneralController extends Controller
      */
     public function create()
     {
-        return view('medicosGenerales.create');
+        $universidades = Universidad::all();
+        return view('medicosgenerales.create')->with('universidades', $universidades);
     }
 
     /**
@@ -45,7 +47,7 @@ class MedicoGeneralController extends Controller
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string',
             'tarjeta_profesional' => 'required|numeric',
-            'titulo' => 'required|string',
+            'universidad' => 'required|string',
         ]);
         $medicoGeneral = new medicoGeneral([
             'cedula' => $request->get('cedula'),
@@ -54,7 +56,7 @@ class MedicoGeneralController extends Controller
             'fecha_nacimiento' => $request->get('fecha_nacimiento'),
             'genero' => $request->get('genero'),
             'tarjeta_profesional' => $request->get('tarjeta_profesional'),
-            'titulo' => $request->get('titulo'),
+            'universidad' => $request->get('universidad'),
         ]);
         $medicoGeneral->save();
         $user = new User([

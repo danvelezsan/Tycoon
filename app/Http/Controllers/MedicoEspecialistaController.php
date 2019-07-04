@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\MedicoEspecialista;
+use App\Especialidad;
+use App\Universidad;
 use App\User;
 
 class MedicoEspecialistaController extends Controller
@@ -27,7 +29,9 @@ class MedicoEspecialistaController extends Controller
      */
     public function create()
     {
-        return view('medicosEspecialistas.create');
+        $especialidades = Especialidad::all();
+        $universidades = Universidad::all();
+        return view('medicosEspecialistas.create', compact('especialidades', 'universidades'));
     }
 
     /**
@@ -45,7 +49,7 @@ class MedicoEspecialistaController extends Controller
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string',
             'tarjeta_profesional' => 'required|numeric',
-            'titulo' => 'required|string',
+            'universidad' => 'required|string',
             'dirConsultorio' => 'required|string',
             'especialidad' => 'required|string',
         ]);
@@ -56,7 +60,7 @@ class MedicoEspecialistaController extends Controller
             'fecha_nacimiento' => $request->get('fecha_nacimiento'),
             'genero' => $request->get('genero'),
             'tarjeta_profesional' => $request->get('tarjeta_profesional'),
-            'titulo' => $request->get('titulo'),
+            'universidad' => $request->get('universidad'),
             'dirConsultorio' => $request->get('dirConsultorio'),
             'especialidad' => $request->get('especialidad'),
         ]);

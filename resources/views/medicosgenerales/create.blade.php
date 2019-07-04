@@ -18,7 +18,7 @@
                             <label for="cedula" class="col-md-4 col-form-label text-md-right">Cédula</label>
 
                             <div class="col-md-6">
-                                <input id="cedula" type="number" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus placeholder="Ingrese su cédula" min="0">
+                                <input id="cedula" type="number" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus placeholder="Ingrese la cédula" min="0">
 
                                 @error('cedula')
                                     <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
                             <label for="contrasena" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contrasena" type="password" class="form-control @error('contrasena') is-invalid @enderror" name="contrasena" value="{{ old('contrasena') }}" required autocomplete="constrasena" autofocus min="0" placeholder="Ingrese su contraseña">
+                                <input id="contrasena" type="password" class="form-control @error('contrasena') is-invalid @enderror" name="contrasena" value="{{ old('contrasena') }}" required autocomplete="constrasena" autofocus min="0" placeholder="Ingrese la contraseña">
 
                                 @error('contrasena')
                                     <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                             <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus placeholder="Ingrese su nombre">
+                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus placeholder="Ingrese el nombre">
 
                                 @error('nombre')
                                     <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
                             <label for="apellidos" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
 
                             <div class="col-md-6">
-                                <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus placeholder="Ingrese sus apellidos">
+                                <input id="apellidos" type="text" class="form-control @error('apellidos') is-invalid @enderror" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus placeholder="Ingrese los apellidos">
 
                                 @error('apellidos')
                                     <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                             <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de nacimiento') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fecha_nacimiento" type="date" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus placeholder="Ingrese su fecha de nacimiento">
+                                <input id="fecha_nacimiento" type="date" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus placeholder="Ingrese la fecha de nacimiento">
 
                                 @error('fecha_nacimiento')
                                     <span class="invalid-feedback" role="alert">
@@ -118,16 +118,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="titulo" class="col-md-4 col-form-label text-md-right">{{ __('Nombre del título') }}</label>
+                            <label for="universidad" class="col-md-4 col-form-label text-md-right">{{ __('Universidad') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus placeholder="Ingrese su título">
-
-                                @error('titulo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class=" col-md-6">
+                                <select name="universidad" required id="universidad" class="form-control ">
+                                    @foreach($universidades as $universidad)
+                                            <option value="{{ $universidad -> nombre }}">{{ $universidad -> nombre }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

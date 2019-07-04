@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTitulosTable extends Migration
+class CreateUniversidadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateTitulosTable extends Migration
      */
     public function up()
     {
-        Schema::create('especialidads', function (Blueprint $table) {
+        Schema::create('universidads', function (Blueprint $table) {
             $table->integer('codigo')->primary();
-            $table->string('universidad');
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
-    }
     }
 
     /**
@@ -28,6 +27,6 @@ class CreateTitulosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('titulos');
+        Schema::dropIfExists('universidads');
     }
 }

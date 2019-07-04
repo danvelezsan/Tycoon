@@ -20,7 +20,7 @@ class CreateMedicoGeneralsTable extends Migration
             $table->date('fecha_nacimiento');
             $table->string('genero');
             $table->integer('tarjeta_profesional');
-            $table->string('titulo');
+            $table->string('universidad');
             $table->timestamps();
         });
     }
