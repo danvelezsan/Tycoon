@@ -38,6 +38,17 @@ class MedicoEspecialistaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'cedula' => 'required|unique:Pacientes|numeric',
+            'nombre' => 'required|string',
+            'apellidos' => 'required|string',
+            'fecha_nacimiento' => 'required|date',
+            'genero' => 'required|string',
+            'tarjeta_profesional' => 'required|numeric',
+            'titulo' => 'required|string',
+            'dirConsultorio' => 'required|string',
+            'especialidad' => 'required|string',
+        ]);
         $medicoEspecialista = new medicoEspecialista([
             'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),

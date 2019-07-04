@@ -38,6 +38,13 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'cedula' => 'required|unique:Pacientes|numeric',
+            'nombre' => 'required|string',
+            'apellidos' => 'required|string',
+            'fecha_nacimiento' => 'required|date',
+            'genero' => 'required|string',
+        ]);
         $paciente = new Paciente([
             'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),
