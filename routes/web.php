@@ -12,12 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/welcome');
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/pacientes/registrarPaciente', 'PacienteController@create');
+Route::get('/pacientes', 'PacienteController@index');
 Route::get('/pacientes/listarPacientes', 'PacienteController@show');
 Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy');
 Route::resource('pacientes', 'PacienteController');
