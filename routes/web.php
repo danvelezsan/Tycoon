@@ -17,8 +17,8 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/administrador/inicio', 'AdministradorController@index');
-Route::resource('administrador', 'AdministradorController');
+Route::get('/administrador/inicio', 'AdministradorController@index')->middleware('auth', 'role:Administrador');
+Route::resource('administrador', 'AdministradorController')->middleware('auth', 'role:Administrador');
 
 Route::get('/pacientes/registrarPaciente', 'PacienteController@create')->middleware('auth', 'role:Administrador');
 Route::get('/pacientes', 'PacienteController@index');
