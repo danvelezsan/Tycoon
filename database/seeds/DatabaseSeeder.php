@@ -13,8 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 1,
-            'name' => "Daniel",
+            'name' => "Admin",
             'password' => bcrypt(12345678),
+        ]);
+        DB::table('role_user')->insert([
+            'role_id' => 1,
+            'user_id' => 1
         ]);
         DB::table('roles')->insert([
             'id' => 1,
