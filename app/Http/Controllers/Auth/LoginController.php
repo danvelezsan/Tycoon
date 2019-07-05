@@ -35,13 +35,13 @@ class LoginController extends Controller
         // Check user role
         switch ($role) {
             case 'Administrador':
-                redirect('/administrador');
+                redirect('/administrador/inicio');
                 break;
             case 'Paciente':
-                redirect('/paciente');
+                redirect('/pacientes/inicio');
                 break; 
             default:
-                redirect('/medico');
+                redirect('/medico/inicio');
                 break;
         }
     }

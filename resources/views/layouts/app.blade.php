@@ -24,27 +24,103 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Pyramid Tycoon
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                @guest
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Pyramid Tycoon
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                                <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
-                            </li>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
+                                <a class="nav-link" href="/pacientes/listarPacientes">guest</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
-                            </li>
+                        </ul>
+                @else
+                    @if ( Auth::user()->role == 'Administrador' )
+                        <a class="navbar-brand" href="/administrador/inicio">
+                        Pyramid Tycoon
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-                    </ul>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/administrador/inicio">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
+                                </li>
+                            </ul>
+                    @elseif ( Auth::user()->role == 'Paciente' )
+                        <a class="navbar-brand" href="/pacientes/inicio">
+                        Pyramid Tycoon
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/pacientes/inicio">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
+                                </li>
+                            </ul>    
+                    @elseif ( Auth::user()->role == 'MedicoGeneral' )
+                        <a class="navbar-brand" href="/medicosGenerales/inicio">
+                        Pyramid Tycoon
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosGenerales/inicio">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
+                                </li>
+                            </ul>
+                    @elseif ( Auth::user()->role == 'MedicoEspecialista' )
+                        <a class="navbar-brand" href="/medicosEspecialistas/inicio">
+                        Pyramid Tycoon
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosEspecialistas/inicio">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
+                                </li>
+                            </ul>
+                    @endif
+                @endguest
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
