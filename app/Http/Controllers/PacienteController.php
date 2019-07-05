@@ -131,6 +131,7 @@ class PacienteController extends Controller
 
         $user->delete();
         $paciente->delete();
+        DB::table('role_user')->where('user_id', $id)->delete();
 
         session()->flash('eliminado', 'El paciente se ha eliminado correctamente');
 

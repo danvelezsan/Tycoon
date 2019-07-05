@@ -142,6 +142,7 @@ class MedicoGeneralController extends Controller
 
         $user->delete();
         $medico->delete();
+        DB::table('role_user')->where('user_id', $id)->delete();
 
         session()->flash('eliminado', 'El médico general se ha eliminado correctamente');
 

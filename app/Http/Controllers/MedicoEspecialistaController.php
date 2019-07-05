@@ -151,6 +151,7 @@ class MedicoEspecialistaController extends Controller
 
         $user->delete();
         $medico->delete();
+        DB::table('role_user')->where('user_id', $id)->delete();
 
         session()->flash('eliminado', 'El médico especialista se ha eliminado correctamente');
 
