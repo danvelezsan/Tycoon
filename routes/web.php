@@ -35,7 +35,7 @@ Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspeciali
 Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show')->middleware('auth', 'role:Administrador');
 Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy')->middleware('auth', 'role:Administrador');
 Route::resource('medicosEspecialistas', 'MedicoEspecialistaController');
->>>>>>> 08be2582f4c45c473d1775fe9dcbf71f25e3d684
+
 
 
 
