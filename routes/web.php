@@ -12,26 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('/auth/login');
+    return view('/welcome');
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/pacientes/registrarPaciente', 'PacienteController@create');
-Route::get('/pacientes/inicio', 'PacienteController@index');
-Route::get('/pacientes/listarPacientes', 'PacienteController@show');
-Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy');
-Route::resource('pacientes', 'PacienteController');
+Route::get('/pacientes/registrarPaciente', 'PacienteController@create')->middleware('auth', 'role:Administrador');
+Route::get('/pacientes', 'PacienteController@index');
+Route::get('/pacientes/listarPacientes', 'PacienteController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('pacientes', 'PacienteController')->middleware('auth', 'role:Administrador');
 
-Route::get('/medicosGenerales/registrarMedicoGeneral', 'MedicoGeneralController@create');
-Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@show');
-Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy');
-Route::resource('medicosGenerales', 'MedicoGeneralController');
+Route::get('/medicosGenerales/registrarMedicoGeneral', 'MedicoGeneralController@create')->middleware('auth', 'role:Administrador');
+Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('medicosGenerales', 'MedicoGeneralController')->middleware('auth', 'role:Administrador');
 
-Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create');
-Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show');
-Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy');
-Route::resource('medicosEspecialistas', 'MedicoEspecialistaController');
+Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create')->middleware('auth', 'role:Administrador');
+Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('medicosEspecialistas', 'MedicoEspecialistaController')->middleware('auth', 'role:Administrador');
 
 
 
