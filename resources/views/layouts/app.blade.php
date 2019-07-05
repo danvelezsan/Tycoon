@@ -40,7 +40,7 @@
                             </li>
                         </ul>
                 @else
-                    @if ( Auth::user()->role == 'Administrador' )
+                    @if ( Auth::user()->hasRole('Administrador') )
                         <a class="navbar-brand" href="/administrador/inicio">
                         Pyramid Tycoon
                         </a>
@@ -64,7 +64,7 @@
                                     <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
                                 </li>
                             </ul>
-                    @elseif ( Auth::user()->role == 'Paciente' )
+                    @elseif ( Auth::user()->hasRole('Paciente') )
                         <a class="navbar-brand" href="/pacientes/inicio">
                         Pyramid Tycoon
                         </a>
@@ -82,7 +82,7 @@
                                     <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
                                 </li>
                             </ul>    
-                    @elseif ( Auth::user()->role == 'MedicoGeneral' )
+                    @elseif ( Auth::user()->hasRole('MedicoGeneral') )
                         <a class="navbar-brand" href="/medicosGenerales/inicio">
                         Pyramid Tycoon
                         </a>
@@ -100,7 +100,7 @@
                                     <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
                                 </li>
                             </ul>
-                    @elseif ( Auth::user()->role == 'MedicoEspecialista' )
+                    @elseif ( Auth::user()->hasRole('MedicoEspecialista') )
                         <a class="navbar-brand" href="/medicosEspecialistas/inicio">
                         Pyramid Tycoon
                         </a>
