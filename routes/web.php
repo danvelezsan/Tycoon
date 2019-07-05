@@ -17,6 +17,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
+<<<<<<< HEAD
 Route::get('/administrador/inicio', 'AdministradorController@index');
 Route::resource('administrador', 'AdministradorController');
 
@@ -35,6 +36,23 @@ Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspeciali
 Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show');
 Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy');
 Route::resource('medicosEspecialistas', 'MedicoEspecialistaController');
+=======
+Route::get('/pacientes/registrarPaciente', 'PacienteController@create')->middleware('auth', 'role:Administrador');
+Route::get('/pacientes', 'PacienteController@index');
+Route::get('/pacientes/listarPacientes', 'PacienteController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('pacientes', 'PacienteController')->middleware('auth', 'role:Administrador');
+
+Route::get('/medicosGenerales/registrarMedicoGeneral', 'MedicoGeneralController@create')->middleware('auth', 'role:Administrador');
+Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('medicosGenerales', 'MedicoGeneralController')->middleware('auth', 'role:Administrador');
+
+Route::get('/medicosEspecialistas/registrarMedicoEspecialista', 'MedicoEspecialistaController@create')->middleware('auth', 'role:Administrador');
+Route::get('/medicosEspecialistas/listarMedicosEspecialistas', 'MedicoEspecialistaController@show')->middleware('auth', 'role:Administrador');
+Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEspecialistaController@destroy')->middleware('auth', 'role:Administrador');
+Route::resource('medicosEspecialistas', 'MedicoEspecialistaController')->middleware('auth', 'role:Administrador');
+>>>>>>> 08be2582f4c45c473d1775fe9dcbf71f25e3d684
 
 
 
