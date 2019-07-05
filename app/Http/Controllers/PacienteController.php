@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use App\Paciente;
 use App\User;
 
@@ -38,13 +39,36 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
+        $message=([
+            'cedula.unique' => 'Paciente Ya Existente',
+            'cedula.numeric' => 'Datos Incorrectos',
+            'nombre.string' => 'Datos Incorrectos',
+            'apellidos.string' => 'Datos Incorrectos',
+            'fecha_nacimiento.date' => 'Datos Incorrectos',
+            'genero.string' => 'Datos Incorrectos',
+            'genero.in' => 'Datos Incorrectos',
+        ]);
+
         $request->validate([
-            'cedula' => 'required|unique:Pacientes|numeric',
+            'cedula' => 'required|unique:users|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date',
-            'genero' => 'required|string',
+            'genero' => 'required|string|in:masculino, femenino',
+            'contrasena' => 'required|string|confirmed',
+        ],$message);
+
+        $user = new User([
+            'id' => $request->get('cedula'),
+            'name' => $request->get('nombre'),
+            'password' => Hash::make($request->get('contrasena')),
         ]);
+        $user->save();
+
+        DB::table('role_user')->insert(
+            ['role_id' => 4 , 'user_id' => $request->get('cedula')]
+        );
+
         $paciente = new Paciente([
             'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),
@@ -53,13 +77,6 @@ class PacienteController extends Controller
             'genero' => $request->get('genero'),
         ]);
         $paciente->save();
-        $user = new User([
-            'id' => $request->get('cedula'),
-            'name' => $request->get('nombre'),
-            'password' => Hash::make($request->get('contrasena')),
-            'role' => "Paciente",
-        ]);
-        $user->save();
 
         session()->flash('registrado', 'El paciente se ha creado correctamente');
 
@@ -114,22 +131,6 @@ class PacienteController extends Controller
 
         $user->delete();
         $paciente->delete();
-
-        if ($user->delete()) {
-            Session::flash('message', '¡Usuario eliminado correctamente!');
-            Session::flash('class', 'success');
-        } else {
-            Session::flash('message', '¡Ha ocurrido un error!');
-            Session::flash('class', 'danger');
-        }
-
-        if ($paciente->delete()) {
-            Session::flash('message', '¡Paciente eliminado correctamente!');
-            Session::flash('class', 'success');
-        } else {
-            Session::flash('message', '¡Ha ocurrido un error!');
-            Session::flash('class', 'danger');
-        }
 
         session()->flash('eliminado', 'El paciente se ha eliminado correctamente');
 

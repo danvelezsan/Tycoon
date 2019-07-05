@@ -42,17 +42,48 @@ class MedicoEspecialistaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $message=([
+            'cedula.unique' => 'Especialista Ya Existente',
+            'tarjeta_profesional.unique' => 'Tarjeta Profesional Ya Registrada',
+            'dirConsultorio' => 'Direccion ya Registrada',
+            'cedula.numeric' => 'Datos Incorrectos',
+            'nombre.string' => 'Datos Incorrectos',
+            'apellidos.string' => 'Datos Incorrectos',
+            'fecha_nacimiento.date' => 'Datos Incorrectos',
+            'genero.string' => 'Datos Incorrectos',
+            'genero.in' => 'Datos Incorrectos',
+            'tarjeta_profesional.numeric' => 'Datos Incorrectos',
+            'universidad.string' => 'Datos Incorrectos',
+            'dirConsultorio.string' => 'Datos Incorrectos',
+            'especialidad.string' => 'Datos Incorrectos',
+        ]);
+
         $request->validate([
-            'cedula' => 'required|unique:Pacientes|numeric',
+            'cedula' => 'required|unique:users|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string',
-            'tarjeta_profesional' => 'required|numeric',
+            'tarjeta_profesional' => 'required|unique:medicogenerals|unique:medicoespecialistas|numeric',
             'universidad' => 'required|string',
-            'dirConsultorio' => 'required|string',
+            'dirConsultorio' => 'required|unique:medicoespecialistas|string',
             'especialidad' => 'required|string',
+            'contrasena' => 'required|string|confirmed',
+        ],$message);
+
+        $user = new User([
+            'id' => $request->get('cedula'),
+            'name' => $request->get('nombre'),
+            'password' => Hash::make($request->get('contrasena')),
         ]);
+        $user->save();
+
+        
+        DB::table('role_user')->insert(
+            ['role_id' => 3 , 'user_id' => $request->get('cedula')]
+        );
+
         $medicoEspecialista = new medicoEspecialista([
             'cedula' => $request->get('cedula'),
             'nombre' => $request->get('nombre'),
@@ -65,13 +96,6 @@ class MedicoEspecialistaController extends Controller
             'especialidad' => $request->get('especialidad'),
         ]);
         $medicoEspecialista->save();
-        $user = new User([
-            'id' => $request->get('cedula'),
-            'name' => $request->get('nombre'),
-            'password' => Hash::make($request->get('contrasena')),
-            'role' => "MedicoEspecialista",
-        ]);
-        $user->save();
 
         session()->flash('registrado', 'El médico especialista se ha creado correctamente');
 
@@ -126,22 +150,6 @@ class MedicoEspecialistaController extends Controller
 
         $user->delete();
         $medico->delete();
-
-        if ($user->delete()) {
-            Session::flash('message', '¡Usuario eliminado correctamente!');
-            Session::flash('class', 'success');
-        } else {
-            Session::flash('message', '¡Ha ocurrido un error!');
-            Session::flash('class', 'danger');
-        }
-
-        if ($medico->delete()) {
-            Session::flash('message', '¡Médico especialista eliminado correctamente!');
-            Session::flash('class', 'success');
-        } else {
-            Session::flash('message', '¡Ha ocurrido un error!');
-            Session::flash('class', 'danger');
-        }
 
         session()->flash('eliminado', 'El médico especialista se ha eliminado correctamente');
 
