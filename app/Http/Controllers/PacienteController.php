@@ -50,12 +50,12 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users|numeric',
+            'cedula' => 'required|unique:users,id|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string|in:masculino, femenino',
-            'contrasena' => 'required|string|confirmed',
+            'contrasena' => 'required|string',
         ],$message);
 
         $user = new User([

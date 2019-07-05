@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use App\MedicoGeneral;
 use App\Universidad;
 use App\User;
+
 
 class MedicoGeneralController extends Controller
 {
@@ -55,14 +57,14 @@ class MedicoGeneralController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users|numeric',
+            'cedula' => 'required|unique:users,id|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string',
-            'tarjeta_profesional' => 'required|unique:medicogenerals|unique:medicoespecialistas|numeric',
+            'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|numeric',
             'universidad' => 'required|string',
-            'contrasena' => 'required|string|confirmed',
+            'contrasena' => 'required|string',
         ],$message);
 
         $user = new User([
