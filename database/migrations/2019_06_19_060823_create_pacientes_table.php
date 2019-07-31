@@ -14,7 +14,8 @@ class CreatePacientesTable extends Migration
     public function up()
     {
         Schema::create('pacientes', function (Blueprint $table) {
-            $table->integer('cedula')->primary();
+            $table->bigIncrements('id');
+            $table->integer('cedula')->unique();
             $table->string('nombre');
             $table->string('apellidos');
             $table->date('fecha_nacimiento');
