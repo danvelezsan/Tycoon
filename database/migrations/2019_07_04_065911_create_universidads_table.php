@@ -14,7 +14,8 @@ class CreateUniversidadsTable extends Migration
     public function up()
     {
         Schema::create('universidads', function (Blueprint $table) {
-            $table->integer('codigo')->primary();
+            $table->bigIncrements('id');
+            $table->integer('codigo')->unique();
             $table->string('nombre')->unique();
             $table->timestamps();
         });
