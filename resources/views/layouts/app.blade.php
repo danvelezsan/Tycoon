@@ -41,7 +41,7 @@
                         </ul>
                 @else
                     @if ( Auth::user()->hasRole('Administrador') )
-                        <a class="navbar-brand" href="/administrador/inicio">
+                        <a class="navbar-brand" href="/administrador/index">
                         Pyramid Tycoon
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -52,7 +52,7 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/administrador/inicio">Inicio</a>
+                                    <a class="nav-link" href="/administrador/index">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
@@ -65,7 +65,7 @@
                                 </li>
                             </ul>
                     @elseif ( Auth::user()->hasRole('Paciente') )
-                        <a class="navbar-brand" href="/pacientes/inicio">
+                        <a class="navbar-brand" href="/pacientes/welcome">
                         Pyramid Tycoon
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -76,10 +76,10 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/pacientes/inicio">Inicio</a>
+                                    <a class="nav-link" href="/pacientes/welcome">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/pacientes/listarCitas">Citas</a>
+                                    <a class="nav-link" href="/citas/listarCitas">Citas</a>
                                 </li>
                             </ul>    
                     @elseif ( Auth::user()->hasRole('MedicoGeneral') )
@@ -97,7 +97,7 @@
                                     <a class="nav-link" href="/medicosGenerales/inicio">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/medicosGenerales/listarMedicosGenerales">Médicos Generales</a>
+                                    <a class="nav-link" href="/medicosGenerales/agenda">Agenda</a>
                                 </li>
                             </ul>
                     @elseif ( Auth::user()->hasRole('MedicoEspecialista') )

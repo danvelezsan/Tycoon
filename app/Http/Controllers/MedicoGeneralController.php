@@ -20,7 +20,13 @@ class MedicoGeneralController extends Controller
      */
     public function index()
     {
-        //
+        return view('/medicosGenerales/index');
+    }
+
+    public function agenda()
+    {
+        $citas = Citas::all()->where('idMedico', '=', Auth::id())->get();
+        return view('medicosgenerales.agenda')->with('citas', $citas);
     }
 
     /**

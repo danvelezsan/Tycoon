@@ -20,7 +20,7 @@ class MedicoEspecialistaController extends Controller
      */
     public function index()
     {
-        //
+        return view('/medicosespecialistas/index');
     }
 
     /**

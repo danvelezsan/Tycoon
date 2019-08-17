@@ -43,6 +43,7 @@
 		  				<thead class="thead-light">
 		    				<tr>
 		    					<th scope="col" style="text-align:center">Id</th>
+		    					<th scope="col" style="text-align:center">Id orden</th>
 		    					<th scope="col" style="text-align:center">Cédula médico</th>
 						      	<th scope="col" style="text-align:center">Fecha</th>
 						      	<th scope="col" style="text-align:center">Hora</th>
@@ -54,6 +55,7 @@
 				  			@foreach($citas as $cita)
 				  				<tr>
 				  					<th style="text-align:center">{{ $cita -> id }}</th>
+				  					<th style="text-align:center">{{ $cita -> idOrden }}</th>
 				  					<th style="text-align:center">{{ $cita -> cedulaMedico }}</th>
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
 				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->hora)->format('H:i:s') }}</td>
