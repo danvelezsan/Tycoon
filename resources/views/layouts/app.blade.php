@@ -79,7 +79,7 @@
                                     <a class="nav-link" href="/pacientes/inicio">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/pacientes/listarPacientes">Pacientes</a>
+                                    <a class="nav-link" href="/pacientes/listarCitas">Citas</a>
                                 </li>
                             </ul>    
                     @elseif ( Auth::user()->hasRole('MedicoGeneral') )

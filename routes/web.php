@@ -26,6 +26,7 @@ Route::get('/pacientes/listarPacientes', 'PacienteController@show')->middleware(
 Route::delete('/pacientes/eliminarPaciente/{id}', 'PacienteController@destroy')->middleware('auth', 'role:Administrador');
 Route::resource('pacientes', 'PacienteController')->middleware('auth', 'role:Administrador');
 
+
 Route::get('/medicosGenerales/registrarMedicoGeneral', 'MedicoGeneralController@create')->middleware('auth', 'role:Administrador');
 Route::get('/medicosGenerales/listarMedicosGenerales', 'MedicoGeneralController@show')->middleware('auth', 'role:Administrador');
 Route::delete('/medicosGenerales/eliminarMedicoGeneral/{id}', 'MedicoGeneralController@destroy')->middleware('auth', 'role:Administrador');
@@ -37,5 +38,5 @@ Route::delete('/medicosEspecialistas/eliminarMedicoEspecialista/{id}', 'MedicoEs
 Route::resource('medicosEspecialistas', 'MedicoEspecialistaController')->middleware('auth', 'role:Administrador');
 
 
-
-
+Route::get('/pacientes/listarCitas', 'CitaController@show')->middleware('auth', 'role:Paciente');
+Route::resource('citas', 'CitaController')->middleware('auth', 'role:Paciente');
