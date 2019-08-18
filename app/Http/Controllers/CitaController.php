@@ -46,8 +46,7 @@ class CitaController extends Controller
      */
     public function show()
     {
-        $citas = Cita::orderBy('id', 'DESC')->get();
-        return view('pacientes.showCitas')->with('citas', $citas);
+        //
     }
 
     /**

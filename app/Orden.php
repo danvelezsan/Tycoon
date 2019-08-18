@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Orden extends Model
 {
         protected $fillable = [
-        'id', 'verificacionUsada', 'fecha', 'cedulaPaciente', 'cedulaMedico', 
+        'verificacionUsada', 'fecha', 'cedulaPaciente', 'especialidad', 'cedulaMedico', 
     ];
 
     protected $casts = [

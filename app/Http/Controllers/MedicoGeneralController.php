@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\MedicoGeneral;
 use App\Universidad;
+use App\Especialidad;
+use App\Orden;
 use App\User;
-
+use App\Cita;
 
 class MedicoGeneralController extends Controller
 {
@@ -20,13 +23,48 @@ class MedicoGeneralController extends Controller
      */
     public function index()
     {
-        return view('/medicosGenerales/index');
+        return view('medicosGenerales.index');
     }
 
     public function agenda()
     {
-        $citas = Citas::all()->where('idMedico', '=', Auth::id())->get();
-        return view('medicosgenerales.agenda')->with('citas', $citas);
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaMedico', '=', Auth::id())->get();
+        return view('medicosgenerales.agenda')->with('citas', $citas);;
+    }
+
+    public function generarOrden($id)
+    {
+        $cita = Cita::find($id);
+        $cedulaPaciente = $cita -> cedulaPaciente;
+        $especialidades = Especialidad::all();
+        return view('medicosgenerales.generarOrden', compact('especialidades', 'cedulaPaciente'));
+    }
+
+    public function  storeOrden(Request $request)
+    {
+        $orden = new Orden([
+            'verificacionUsada' => FALSE,
+            'fecha' => date("Y-m-d"),
+            'especialidad' => $request->get('especialidad'),
+            'cedulaPaciente' => $request->get('cedulaPaciente'),
+            'cedulaMedico' => Auth::id(),
+        ]);
+
+        $orden->save();
+
+        session()->flash('generada', 'La orden ha sido generada correctamente');
+
+        return redirect('/medicosGenerales/agenda')->with('success');
+    }
+
+    public function destroyCita($id)
+    {
+        $cita = Cita::find($id);
+        $cita->delete();
+
+        session()->flash('cancelada', 'La cita se ha cancelado correctamente');
+
+        return redirect('/medicosGenerales/agenda')->with('success','heee heeeee');
     }
 
     /**

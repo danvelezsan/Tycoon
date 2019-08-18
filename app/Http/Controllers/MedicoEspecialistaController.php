@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\MedicoEspecialista;
 use App\Especialidad;
 use App\Universidad;
 use App\User;
+use App\Orden;
+use App\Cita;
 
 class MedicoEspecialistaController extends Controller
 {
@@ -20,7 +23,61 @@ class MedicoEspecialistaController extends Controller
      */
     public function index()
     {
-        return view('/medicosespecialistas/index');
+        return view('medicosespecialistas.index');
+    }
+
+    public function agenda()
+    {
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaMedico', '=', Auth::id())->get();
+        return view('medicosespecialistas.agenda')->with('citas', $citas);;
+    }
+
+    public function generarOrden($id)
+    {
+        $cita = Cita::find($id);
+        $cedulaPaciente = $cita -> cedulaPaciente;
+        $especialidades = Especialidad::all();
+        return view('medicosespecialistas.generarOrden', compact('especialidades', 'cedulaPaciente'));
+    }
+
+    public function  storeOrden(Request $request)
+    {
+        $orden = new Orden([
+            'verificacionUsada' => FALSE,
+            'fecha' => date("Y-m-d"),
+            'especialidad' => $request->get('especialidad'),
+            'cedulaPaciente' => $request->get('cedulaPaciente'),
+            'cedulaMedico' => Auth::id(),
+        ]);
+
+        $orden->save();
+
+        session()->flash('generada', 'La orden ha sido generada correctamente');
+
+        return redirect('/medicosEspecialistas/agenda')->with('success');
+    }
+
+    public function destroyCita($id)
+    {
+        $cita = Cita::find($id);
+        $cedulaPaciente = $cita->cedulaPaciente;
+        $cita->delete();
+
+        $especialista = MedicoEspecialista::where('cedula', '=', Auth::id());
+
+        $orden = new Orden([
+            'verificacionUsada' => FALSE,
+            'fecha' => date("Y-m-d"),
+            'especialidad' => $especialista->first()->especialidad,
+            'cedulaPaciente' => $cedulaPaciente,
+            'cedulaMedico' => Auth::id(),
+        ]);
+
+        $orden->save();
+
+        session()->flash('cancelada', 'La cita se ha cancelado correctamente');
+
+        return redirect('/medicosEspecialistas/agenda')->with('success','heee heeeee');
     }
 
     /**

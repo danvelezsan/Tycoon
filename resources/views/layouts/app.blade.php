@@ -65,7 +65,7 @@
                                 </li>
                             </ul>
                     @elseif ( Auth::user()->hasRole('Paciente') )
-                        <a class="navbar-brand" href="/pacientes/welcome">
+                        <a class="navbar-brand" href="/pacientes/index">
                         Pyramid Tycoon
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -76,14 +76,17 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/pacientes/welcome">Inicio</a>
+                                    <a class="nav-link" href="/pacientes/index">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/citas/listarCitas">Citas</a>
+                                    <a class="nav-link" href="/pacientes/agenda">Agenda</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/pacientes/ordenes">Ordenes</a>
                                 </li>
                             </ul>    
                     @elseif ( Auth::user()->hasRole('MedicoGeneral') )
-                        <a class="navbar-brand" href="/medicosGenerales/inicio">
+                        <a class="navbar-brand" href="/medicosGenerales/index">
                         Pyramid Tycoon
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -94,14 +97,14 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/medicosGenerales/inicio">Inicio</a>
+                                    <a class="nav-link" href="/medicosGenerales/index">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/medicosGenerales/agenda">Agenda</a>
                                 </li>
                             </ul>
                     @elseif ( Auth::user()->hasRole('MedicoEspecialista') )
-                        <a class="navbar-brand" href="/medicosEspecialistas/inicio">
+                        <a class="navbar-brand" href="/medicosEspecialistas/index">
                         Pyramid Tycoon
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -112,10 +115,10 @@
                             <!-- Left Side Of Navbar -->
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/medicosEspecialistas/inicio">Inicio</a>
+                                    <a class="nav-link" href="/medicosEspecialistas/index">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/medicosEspecialistas/listarMedicosEspecialistas">Médicos Especialistas</a>
+                                    <a class="nav-link" href="/medicosEspecialistas/agenda">Agenda</a>
                                 </li>
                             </ul>
                     @endif

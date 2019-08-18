@@ -17,6 +17,7 @@ class CreateOrdensTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->boolean('verificacionUsada');
             $table->date('fecha');
+            $table->string('especialidad');
             $table->integer('cedulaPaciente');
             $table->integer('cedulaMedico');
             $table->timestamps();

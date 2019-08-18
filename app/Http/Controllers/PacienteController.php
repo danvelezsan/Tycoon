@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Paciente;
+use App\MedicoGeneral;
+use App\MedicoEspecialista;
 use App\User;
+use App\Orden;
+use App\Cita;
 
 class PacienteController extends Controller
 {
@@ -29,6 +34,107 @@ class PacienteController extends Controller
     public function create()
     {
         return view('pacientes.create');
+    }
+
+    public function agenda()
+    {
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaPaciente', '=', Auth::id())->get();
+        return view('pacientes.agenda')->with('citas', $citas);
+    }
+
+    public function agendarCitaGeneral()
+    {
+        $medicos = MedicoGeneral::select('cedula', 'nombre')->get();
+        return view('pacientes.agendarCitaGeneral')->with('medicos', $medicos);
+    }
+
+    public function agendarCitaEspecialista($id)
+    {
+        $orden = Orden::find($id);
+        $especialidad = $orden->especialidad;
+        $medicos = MedicoEspecialista::select('cedula', 'nombre')->where('especialidad', '=', $especialidad)->get();
+        return view('pacientes.agendarCitaEspecialista', compact('medicos', 'orden'));
+    }
+
+    public function storeCitaGeneral(Request $request)
+    {
+
+        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::id())->get();
+        $nombrePaciente = $nombrePaciente[0] -> nombre;
+        $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
+        $nombreMedico = $nombreMedico[0] -> nombre;
+
+
+        $cita = new Cita([
+            'idOrden' => NULL,
+            'cedulaPaciente' => Auth::id(),
+            'nombrePaciente' => $nombrePaciente,
+            'cedulaMedico' => $request->get('cedulaMedico'),
+            'nombreMedico' => $nombreMedico,
+            'fecha' => $request->get('fecha'),
+            'hora' => $request->get('hora'),
+        ]);
+        $cita->save();
+
+        session()->flash('agendada', 'La cita ha sido agendada correctamente');
+
+        return redirect('/pacientes/agenda')->with('success');
+    }
+
+    public function storeCitaEspecialista(Request $request)
+    {
+
+        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::id())->get();
+        $nombrePaciente = $nombrePaciente[0] -> nombre;
+        $nombreMedico = MedicoEspecialista::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
+        $nombreMedico = $nombreMedico[0] -> nombre;
+
+        $cita = new Cita([
+            'idOrden' => $request->get('idOrden'),
+            'cedulaPaciente' => Auth::id(),
+            'nombrePaciente' => $nombrePaciente,
+            'cedulaMedico' => $request->get('cedulaMedico'),
+            'nombreMedico' => $nombreMedico,
+            'fecha' => $request->get('fecha'),
+            'hora' => $request->get('hora'),
+        ]);
+
+        Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
+
+        $cita->save();
+
+        session()->flash('agendada', 'La cita ha sido agendada correctamente');
+
+        return redirect('/pacientes/agenda')->with('success');
+    }
+
+    public function editCita($id)
+    {
+        return view('pacientes.editarCita')->with('id', $id);
+    }
+
+    public function updateCita(Request $request)
+    {
+        Cita::find($request->get('id'))->update(['hora' => $request->get('hora'), 'fecha' => $request->get('fecha')]);
+
+        session()->flash('editada', 'La cita ha sido editada correctamente');
+        return redirect('/pacientes/agenda')->with('success');
+    }
+
+    public function destroyCita($id)
+    {
+        $cita = Cita::find($id);
+        $cita->delete();
+
+        session()->flash('cancelada', 'La cita se ha cancelado correctamente');
+
+        return redirect('/pacientes/agenda')->with('success','heee heeeee');
+    }
+
+    public function ordenes()
+    {
+        $ordenes = Orden::select('id', 'verificacionUsada', 'fecha', 'especialidad', 'cedulaPaciente', 'cedulaMedico')->where('cedulaPaciente', '=', Auth::id())->where('verificacionUsada', '=', false)->get();
+        return view('pacientes.ordenes')->with('ordenes', $ordenes);
     }
 
     /**
