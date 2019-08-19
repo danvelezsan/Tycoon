@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('/auth/login');
+    if (!Auth::user()) {
+        return view('/auth/login');
+    }
+    else {
+        return redirect('/home');
+    }
 });
 
 
