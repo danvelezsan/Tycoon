@@ -12,11 +12,11 @@
 */
 
 Route::get('/', function () {
-    if (!Auth::user()) {
-        return view('/auth/login');
-    }
-    else {
+    if (Auth::check()) {
         return redirect('/home');
+    }
+    else {      
+        return view('/auth/login');
     }
 });
 

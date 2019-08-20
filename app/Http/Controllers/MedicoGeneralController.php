@@ -94,6 +94,8 @@ class MedicoGeneralController extends Controller
             'nombre.string' => 'Datos Incorrectos',
             'apellidos.string' => 'Datos Incorrectos',
             'fecha_nacimiento.date' => 'Datos Incorrectos',
+            'fecha_nacimiento.before' => 'Datos Incorrectos',
+            'fecha_nacimiento.after' => 'Datos Incorrectos',
             'genero.string' => 'Datos Incorrectos',
             'genero.in' => 'Datos Incorrectos',
             'tarjeta_profesional.numeric' => 'Datos Incorrectos',
@@ -104,15 +106,15 @@ class MedicoGeneralController extends Controller
             'cedula' => 'required|unique:users,id|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
-            'fecha_nacimiento' => 'required|date',
-            'genero' => 'required|string',
+            'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',
+            'genero' => 'required|string|in:Masculino, Femenino',
             'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|numeric',
             'universidad' => 'required|string',
             'contrasena' => 'required|string',
         ],$message);
 
         $user = new User([
-            'id' => $request->get('cedula'),
+            'cedula' => $request->get('cedula'),
             'name' => $request->get('nombre'),
             'password' => Hash::make($request->get('contrasena')),
         ]);

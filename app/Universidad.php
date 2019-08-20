@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Universidad extends Model
 {
     protected $fillable = [
-        'codigo', 'nombre',
+        'nombre',
     ];
 }

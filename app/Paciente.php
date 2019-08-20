@@ -3,15 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Persona;
 
-class Paciente extends Model
+class Paciente extends Persona
 {
-    protected $fillable = [
-        'cedula', 'nombre', 'apellidos','fecha_nacimiento','genero'
-    ];
-
-    protected $casts = [
-        'fecha_nacimiento' => 'date',
-    ];
 
 }

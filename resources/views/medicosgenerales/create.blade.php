@@ -82,7 +82,7 @@
                             <label for="fecha_nacimiento" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de nacimiento') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fecha_nacimiento" type="date" class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus placeholder="Ingrese la fecha de nacimiento">
+                                <input id="fecha_nacimiento" type="date" min="1900-01-01" max={{ date('Y-m-d') }} class="form-control @error('fecha_nacimiento') is-invalid @enderror" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autocomplete="fecha_nacimiento" autofocus placeholder="Ingrese la fecha de nacimiento">
 
                                 @error('fecha_nacimiento')
                                     <span class="invalid-feedback" role="alert">
@@ -97,8 +97,8 @@
 
                             <div class=" col-md-6">
                                 <select name="genero" required id="genero" class="form-control">
-                                    <option value="masculino">Masculino</option>
-                                    <option value="femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
                                 </select>
                             </div>
                         </div>
