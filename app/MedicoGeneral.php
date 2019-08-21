@@ -11,4 +11,9 @@ class MedicoGeneral extends Persona
         'tarjeta_profesional', 'universidad'
     ];
 
+    public function universidad()
+    {
+        return $this->belongsTo(App\Universidad, 'universidad', 'nombre');
+    }
+
 }

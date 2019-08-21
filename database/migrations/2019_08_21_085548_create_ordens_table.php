@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCitasTable extends Migration
+class CreateOrdensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateCitasTable extends Migration
      */
     public function up()
     {
-        Schema::create('citas', function (Blueprint $table) {
+        Schema::create('ordens', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
-            $table->integer('idOrden')->nullable();
-            $table->integer('cedulaPaciente');
-            $table->string('nombrePaciente');
-            $table->integer('cedulaMedico');
-            $table->string('nombreMedico');
+            $table->boolean('verificacionUsada');
             $table->date('fecha');
-            $table->time('hora');
+            $table->string('especialidad');
+            $table->integer('cedulaPaciente');
+            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes');
+            $table->integer('cedulaMedico');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateCitasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('citas');
+        Schema::dropIfExists('ordens');
     }
 }

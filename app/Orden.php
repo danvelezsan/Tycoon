@@ -14,4 +14,9 @@ class Orden extends Model
         'fecha' => 'date', 'verificacionUsada' => 'boolean',
     ];
 
+    public function paciente()
+    {
+        return $this->belongsTo(App\Paciente, 'cedulaPaciente', 'cedula');
+    }
+
 }

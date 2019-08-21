@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrdensTable extends Migration
+class CreateCitasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateOrdensTable extends Migration
      */
     public function up()
     {
-        Schema::create('ordens', function (Blueprint $table) {
+        Schema::create('citas', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
-            $table->boolean('verificacionUsada');
-            $table->date('fecha');
-            $table->string('especialidad');
+            $table->integer('idOrden')->nullable();
             $table->integer('cedulaPaciente');
+            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes');
+            $table->string('nombrePaciente');
             $table->integer('cedulaMedico');
+            $table->string('nombreMedico');
+            $table->date('fecha');
+            $table->time('hora');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreateOrdensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordens');
+        Schema::dropIfExists('citas');
     }
 }

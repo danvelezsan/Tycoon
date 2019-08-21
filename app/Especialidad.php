@@ -10,4 +10,9 @@ class Especialidad extends Model
         'nombre',
     ];
 
+    public function especialistas()
+    {
+        return $this->hasMany(App\MedicoEspecialista, 'especialidad', 'nombre');
+    }
+
 }

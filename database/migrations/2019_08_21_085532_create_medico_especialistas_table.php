@@ -23,7 +23,9 @@ class CreateMedicoEspecialistasTable extends Migration
             $table->integer('tarjeta_profesional')->unique();
             $table->string('dirConsultorio')->unique();
             $table->string('universidad');
-            $table->string('especialidad');      
+            $table->foreign('universidad')->references('nombre')->on('universidads');
+            $table->string('especialidad');    
+            $table->foreign('especialidad')->references('nombre')->on('especialidads');  
             $table->timestamps();
         });
     }

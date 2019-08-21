@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'cedula' => 2,
+            'cedula' => 1,
             'name' => "Admin",
             'password' => bcrypt(12345678),
         ]);

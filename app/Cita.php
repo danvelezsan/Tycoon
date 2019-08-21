@@ -14,4 +14,9 @@ class Cita extends Model
         'fecha' => 'date', 'hora' => 'time',
     ];
 
+    public function paciente()
+    {
+        return $this->belongsTo(App\Paciente, 'cedulaPaciente', 'cedula');
+    }
+    
 }
