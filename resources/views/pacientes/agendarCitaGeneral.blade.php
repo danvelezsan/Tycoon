@@ -43,7 +43,7 @@
                             <label for="hora" class="col-md-4 col-form-label text-md-right">{{ __('Hora de la cita') }}</label>
 
                             <div class="col-md-6">
-                                <input id="hora" type="time" class="form-control @error('hora') is-invalid @enderror" name="hora" value="{{ old('hora') }}" required autocomplete="hora" autofocus placeholder="Ingrese la hora">
+                                <input id="hora" type="time" min="08:00" max="16:30" step="1800" class="form-control @error('hora') is-invalid @enderror" name="hora" value="{{ old('hora') }}" required autocomplete="hora" autofocus placeholder="Ingrese la hora">
 
                                 @error('hora')
                                     <span class="invalid-feedback" role="alert">

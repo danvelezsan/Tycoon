@@ -13,12 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'cedula' => 1,
-            'name' => "Admin",
+            'nombre' => "Admin",
             'password' => bcrypt(12345678),
-        ]);
-        DB::table('role_user')->insert([
-            'role_id' => 1,
-            'cedulaUsuario' => 1
         ]);
         DB::table('roles')->insert([
             'name' => "Administrador",
@@ -35,6 +31,10 @@ class DatabaseSeeder extends Seeder
         DB::table('roles')->insert([
             'name' => "Paciente",
             'description' => "Paciente",
+        ]);
+        DB::table('role_user')->insert([
+            'role_id' => 1,
+            'user_id' => 1
         ]);
         DB::table('especialidads')->insert([
             'nombre' => "Cardiologia",

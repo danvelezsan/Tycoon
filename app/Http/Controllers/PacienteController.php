@@ -38,7 +38,7 @@ class PacienteController extends Controller
 
     public function agenda()
     {
-        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaPaciente', '=', Auth::id())->get();
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaPaciente', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
         return view('pacientes.agenda')->with('citas', $citas);
     }
 
@@ -59,7 +59,7 @@ class PacienteController extends Controller
     public function storeCitaGeneral(Request $request)
     {
 
-        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::id())->get();
+        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
         $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
         $nombreMedico = $nombreMedico[0] -> nombre;
@@ -67,7 +67,7 @@ class PacienteController extends Controller
 
         $cita = new Cita([
             'idOrden' => NULL,
-            'cedulaPaciente' => Auth::id(),
+            'cedulaPaciente' => Auth::user()->cedula,
             'nombrePaciente' => $nombrePaciente,
             'cedulaMedico' => $request->get('cedulaMedico'),
             'nombreMedico' => $nombreMedico,
@@ -84,14 +84,14 @@ class PacienteController extends Controller
     public function storeCitaEspecialista(Request $request)
     {
 
-        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::id())->get();
+        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
         $nombreMedico = MedicoEspecialista::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
         $nombreMedico = $nombreMedico[0] -> nombre;
 
         $cita = new Cita([
             'idOrden' => $request->get('idOrden'),
-            'cedulaPaciente' => Auth::id(),
+            'cedulaPaciente' => Auth::user()->cedula,
             'nombrePaciente' => $nombrePaciente,
             'cedulaMedico' => $request->get('cedulaMedico'),
             'nombreMedico' => $nombreMedico,
@@ -133,7 +133,7 @@ class PacienteController extends Controller
 
     public function ordenes()
     {
-        $ordenes = Orden::select('id', 'verificacionUsada', 'fecha', 'especialidad', 'cedulaPaciente', 'cedulaMedico')->where('cedulaPaciente', '=', Auth::id())->where('verificacionUsada', '=', false)->get();
+        $ordenes = Orden::select('id', 'verificacionUsada', 'fecha', 'especialidad', 'cedulaPaciente', 'cedulaMedico')->where('cedulaPaciente', '=', Auth::user()->cedula)->where('verificacionUsada', '=', false)->get();
         return view('pacientes.ordenes')->with('ordenes', $ordenes);
     }
 
@@ -168,13 +168,13 @@ class PacienteController extends Controller
 
         $user = new User([
             'cedula' => $request->get('cedula'),
-            'name' => $request->get('nombre'),
+            'nombre' => $request->get('nombre'),
             'password' => Hash::make($request->get('contrasena')),
         ]);
         $user->save();
-
+        
         DB::table('role_user')->insert(
-            ['role_id' => 4 , 'user_id' => $request->get('cedula')]
+            ['role_id' => 4 , 'user_id' => DB::table('users')->where('cedula', '=', $request->get('cedula'))->value('id')]
         );
 
         $paciente = new Paciente([

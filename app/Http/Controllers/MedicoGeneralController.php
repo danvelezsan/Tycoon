@@ -28,7 +28,7 @@ class MedicoGeneralController extends Controller
 
     public function agenda()
     {
-        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaMedico', '=', Auth::id())->get();
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
         return view('medicosgenerales.agenda')->with('citas', $citas);;
     }
 
@@ -47,7 +47,7 @@ class MedicoGeneralController extends Controller
             'fecha' => date("Y-m-d"),
             'especialidad' => $request->get('especialidad'),
             'cedulaPaciente' => $request->get('cedulaPaciente'),
-            'cedulaMedico' => Auth::id(),
+            'cedulaMedico' => Auth::user()->cedula,
         ]);
 
         $orden->save();
@@ -88,7 +88,7 @@ class MedicoGeneralController extends Controller
     {
         
         $message=([
-            'cedula.unique' => 'Especialista Ya Existente',
+            'cedula.unique' => 'Medico Ya Existente',
             'tarjeta_profesional.unique' => 'Tarjeta Profesional Ya Registrada',
             'cedula.numeric' => 'Datos Incorrectos',
             'nombre.string' => 'Datos Incorrectos',
@@ -115,13 +115,13 @@ class MedicoGeneralController extends Controller
 
         $user = new User([
             'cedula' => $request->get('cedula'),
-            'name' => $request->get('nombre'),
+            'nombre' => $request->get('nombre'),
             'password' => Hash::make($request->get('contrasena')),
         ]);
         $user->save();
 
         DB::table('role_user')->insert(
-            ['role_id' => 2, 'user_id' => $request->get('cedula')]
+            ['role_id' => 2 , 'user_id' => DB::table('users')->where('cedula', '=', $request->get('cedula'))->value('id')]
         );
 
         $medicoGeneral = new medicoGeneral([

@@ -28,7 +28,7 @@ class MedicoEspecialistaController extends Controller
 
     public function agenda()
     {
-        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where('cedulaMedico', '=', Auth::id())->get();
+        $citas = $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
         return view('medicosespecialistas.agenda')->with('citas', $citas);;
     }
 
@@ -47,7 +47,7 @@ class MedicoEspecialistaController extends Controller
             'fecha' => date("Y-m-d"),
             'especialidad' => $request->get('especialidad'),
             'cedulaPaciente' => $request->get('cedulaPaciente'),
-            'cedulaMedico' => Auth::id(),
+            'cedulaMedico' => Auth::user()->cedula,
         ]);
 
         $orden->save();
@@ -63,14 +63,14 @@ class MedicoEspecialistaController extends Controller
         $cedulaPaciente = $cita->cedulaPaciente;
         $cita->delete();
 
-        $especialista = MedicoEspecialista::where('cedula', '=', Auth::id());
+        $especialista = MedicoEspecialista::where('cedula', '=', Auth::user()->cedula);
 
         $orden = new Orden([
             'verificacionUsada' => FALSE,
             'fecha' => date("Y-m-d"),
             'especialidad' => $especialista->first()->especialidad,
             'cedulaPaciente' => $cedulaPaciente,
-            'cedulaMedico' => Auth::id(),
+            'cedulaMedico' => Auth::user()->cedula,
         ]);
 
         $orden->save();
@@ -134,14 +134,13 @@ class MedicoEspecialistaController extends Controller
 
         $user = new User([
             'cedula' => $request->get('cedula'),
-            'name' => $request->get('nombre'),
+            'nombre' => $request->get('nombre'),
             'password' => Hash::make($request->get('contrasena')),
         ]);
         $user->save();
 
-        
         DB::table('role_user')->insert(
-            ['role_id' => 3 , 'user_id' => $request->get('cedula')]
+            ['role_id' => 3 , 'user_id' => DB::table('users')->where('cedula', '=', $request->get('cedula'))->value('id')]
         );
 
         $medicoEspecialista = new medicoEspecialista([

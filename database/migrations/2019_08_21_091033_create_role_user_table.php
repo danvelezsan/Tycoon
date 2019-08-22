@@ -17,8 +17,8 @@ class CreateRoleUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->unsignedInteger('cedulaUsuario');
-            $table->foreign('cedulaUsuario')->references('cedula')->on('users');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

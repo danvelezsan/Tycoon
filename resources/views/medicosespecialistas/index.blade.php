@@ -5,7 +5,7 @@
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">¡Bienvenido {{ Auth::user()->name }}!</h1>
+          <h1 class="jumbotron-heading">¡Bienvenido {{ Auth::user()->nombre }}!</h1>
           <p class="lead text-muted">Aquí podemos ayudarte a hacer tu vida más imposible de lo que ya está, prestandote nuestro servicio de la más alta calidad. Ponte el cinturón para que nos acompañes en esta locura de EPS.</p>
           <p>
             <a href="#" class="btn btn-primary my-2">Ir a esto pues</a>
