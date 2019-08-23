@@ -14,18 +14,6 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="cedulaMedico" class="col-md-4 col-form-label text-md-right">{{ __('Elija su médico') }}</label>
-
-                            <div class=" col-md-6">
-                                <select name="cedulaMedico" required id="cedulaMedico" class="form-control ">
-                                    @foreach($medicos as $medico)
-                                            <option value="{{ $medico -> cedula }}">{{ $medico -> nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="fecha" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de la cita') }}</label>
 
                             <div class="col-md-6">

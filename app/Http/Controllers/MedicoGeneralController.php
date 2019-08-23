@@ -28,7 +28,7 @@ class MedicoGeneralController extends Controller
 
     public function agenda()
     {
-        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fechaHora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fechaHora', '>=', date("Y-m-d H:i:s")]])->get();
         return view('medicosgenerales.agenda')->with('citas', $citas);;
     }
 
