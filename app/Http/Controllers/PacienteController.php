@@ -77,27 +77,34 @@ class PacienteController extends Controller
 
         if ($citasPaciente->isEmpty()) {
             $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
-            $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get()->toArray();
-            $medico = $medico[array_rand($medico)];
+            $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get()->toArray();    
+            if (count($medico)==0) {
+                $medicos = MedicoGeneral::select('cedula', 'nombre')->get();
+                session()->flash('no', 'No hay citas a disponibles a esa fecha y hora');
+                return view('pacientes.agendarCitaGeneral')->with('medicos', $medicos);
+            }
+            else {
+                $medico = $medico[array_rand($medico)];
+                $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
+                $nombrePaciente = $nombrePaciente[0] -> nombre;
+                $nombreMedico = $medico -> nombre;
+    
+    
+                $cita = new Cita([
+                    'idOrden' => NULL,
+                    'cedulaPaciente' => Auth::user()->cedula,
+                    'nombrePaciente' => $nombrePaciente,
+                    'cedulaMedico' => $medico -> cedula,
+                    'nombreMedico' => $nombreMedico,
+                    'fechaHora' => $timestamp,
+                ]);
+                $cita->save();
+    
+                session()->flash('agendada', 'La cita ha sido agendada correctamente');
+    
+                return redirect('/pacientes/agenda')->with('success');
+            }
 
-            $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
-            $nombrePaciente = $nombrePaciente[0] -> nombre;
-            $nombreMedico = $medico -> nombre;
-
-
-            $cita = new Cita([
-                'idOrden' => NULL,
-                'cedulaPaciente' => Auth::user()->cedula,
-                'nombrePaciente' => $nombrePaciente,
-                'cedulaMedico' => $medico -> cedula,
-                'nombreMedico' => $nombreMedico,
-                'fechaHora' => $timestamp,
-            ]);
-            $cita->save();
-
-            session()->flash('agendada', 'La cita ha sido agendada correctamente');
-
-            return redirect('/pacientes/agenda')->with('success');
         }else{
             $medicos = MedicoGeneral::select('cedula', 'nombre')->get();
             session()->flash('cita', 'Ya tienes una cita agendada a esa fecha y hora');
@@ -128,29 +135,37 @@ class PacienteController extends Controller
         if ($citasPaciente->isEmpty()) {
             $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
             $medico = DB::table('medico_especialistas')->where('especialidad', '=', $request ->get('especialidad'))->whereNotIn('cedula', $citas)->get()->toArray();
-            $medico = $medico[array_rand($medico)];
+            if (count($medico)==0) {
+                $medicos = MedicoGeneral::select('cedula', 'nombre')->get();
+                session()->flash('no', 'No hay citas a disponibles a esa fecha y hora');
+                return view('pacientes.agendarCitaGeneral')->with('medicos', $medicos);
+            }
 
+            else {
+                $medico = $medico[array_rand($medico)];
+                $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
+                $nombrePaciente = $nombrePaciente[0] -> nombre;
+                $nombreMedico = $medico -> nombre;
+    
+                $cita = new Cita([
+                    'idOrden' => $request->get('idOrden'),
+                    'cedulaPaciente' => Auth::user()->cedula,
+                    'nombrePaciente' => $nombrePaciente,
+                    'cedulaMedico' => $medico -> cedula,
+                    'nombreMedico' => $nombreMedico,
+                    'fechaHora' => $timestamp,
+                ]);
+    
+                Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
+    
+                $cita->save();
+    
+                session()->flash('agendada', 'La cita ha sido agendada correctamente');
+    
+                return redirect('/pacientes/agenda')->with('success');
 
-            $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
-            $nombrePaciente = $nombrePaciente[0] -> nombre;
-            $nombreMedico = $medico -> nombre;
+            }
 
-            $cita = new Cita([
-                'idOrden' => $request->get('idOrden'),
-                'cedulaPaciente' => Auth::user()->cedula,
-                'nombrePaciente' => $nombrePaciente,
-                'cedulaMedico' => $medico -> cedula,
-                'nombreMedico' => $nombreMedico,
-                'fechaHora' => $timestamp,
-            ]);
-
-            Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
-
-            $cita->save();
-
-            session()->flash('agendada', 'La cita ha sido agendada correctamente');
-
-            return redirect('/pacientes/agenda')->with('success');
         }else{
             $idOrden = $request->get('idOrden');
             $especialidad = $request->get('especialidad');

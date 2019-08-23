@@ -12,6 +12,14 @@
                 </div>
             </div>
             @endif
+            @if (session()->has('no'))
+			<div class="container">
+				<div class="alert alert-success alert-block">
+					<button type="button" class="close" data-dismiss="alert">×</button>	
+	        		<span class="glyphicon glyphicon-ok"><strong>No hay citas a disponibles a esa fecha y hora</strong>
+				</div>
+			</div>
+			@endif
             <div class="card">
                 <div class="card-header">
                     {{ __('Agendar Cita con Médico General') }} 
