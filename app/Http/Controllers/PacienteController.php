@@ -60,15 +60,12 @@ class PacienteController extends Controller
     public function storeCitaGeneral(Request $request)
     {
         $message=([
-            'cedula.exists' => 'Medico Inexistente',
-            'cedula.numeric' => 'Datos Incorrectos',
             'fecha.date' => 'Datos Incorrectos',
             'fecha.after' => 'Datos Incorrectos',
             'hora.regex' => 'Datos Incorrectos',
         ]);
 
         $request->validate([
-            'cedulaMedico' => 'required|exists:medico_generals,cedula|numeric',
             'fecha' => 'required|date|after:yesterday',
             'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
         ],$message);
@@ -102,15 +99,12 @@ class PacienteController extends Controller
     public function storeCitaEspecialista(Request $request)
     {
         $message=([
-            'cedula.exists' => 'Medico Inexistente',
-            'cedula.numeric' => 'Datos Incorrectos',
             'fecha.date' => 'Datos Incorrectos',
             'fecha.after' => 'Datos Incorrectos',
             'hora.regex' => 'Datos Incorrectos',
         ]);
 
         $request->validate([
-            'cedulaMedico' => 'required|exists:medico_especialistas,cedula|numeric',
             'fecha' => 'required|date|after:yesterday',
             'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
         ],$message);
