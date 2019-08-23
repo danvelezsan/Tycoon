@@ -43,6 +43,12 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
+                                <input id="especialidad" type="hidden" name="especialidad" value="{{ $especialidad }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
                                 <input id="idOrden" type="hidden" name="idOrden" value="{{ $orden->id }}">
                             </div>
                         </div>

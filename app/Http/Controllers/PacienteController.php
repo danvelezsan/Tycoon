@@ -54,7 +54,7 @@ class PacienteController extends Controller
         $orden = Orden::find($id);
         $especialidad = $orden->especialidad;
         $medicos = MedicoEspecialista::select('cedula', 'nombre')->where('especialidad', '=', $especialidad)->get();
-        return view('pacientes.agendarCitaEspecialista', compact('medicos', 'orden'));
+        return view('pacientes.agendarCitaEspecialista', compact('medicos', 'orden', 'especialidad'));
     }
 
     public function storeCitaGeneral(Request $request)

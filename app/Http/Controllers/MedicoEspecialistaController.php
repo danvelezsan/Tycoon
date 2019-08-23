@@ -28,7 +28,7 @@ class MedicoEspecialistaController extends Controller
 
     public function agenda()
     {
-        $citas = $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
+        $citas = $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fechaHora')->where([['cedulaMedico', '=', Auth::user()->cedula],['fechaHora', '>=', date("Y-m-d H:i:s")]])->get();
         return view('medicosespecialistas.agenda')->with('citas', $citas);;
     }
 
