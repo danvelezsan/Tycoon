@@ -100,6 +100,21 @@ class PacienteController extends Controller
 
     public function storeCitaEspecialista(Request $request)
     {
+        $message=([
+            'cedula.exists' => 'Medico Inexistente',
+            'cedula.numeric' => 'Datos Incorrectos',
+            'fecha.date' => 'Datos Incorrectos',
+            'fecha.after' => 'Datos Incorrectos',
+            'hora.regex' => 'Datos Incorrectos',
+        ]);
+
+        $request->validate([
+            'cedulaMedico' => 'required|exists:users,cedula|numeric',
+            'fecha' => 'required|date|after:yesterday',
+            'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
+        ],$message);
+
+        $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
@@ -112,8 +127,7 @@ class PacienteController extends Controller
             'nombrePaciente' => $nombrePaciente,
             'cedulaMedico' => $request->get('cedulaMedico'),
             'nombreMedico' => $nombreMedico,
-            'fecha' => $request->get('fecha'),
-            'hora' => $request->get('hora'),
+            'fechaHora' => $timestamp,
         ]);
 
         Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
