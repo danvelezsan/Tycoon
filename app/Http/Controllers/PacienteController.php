@@ -144,7 +144,20 @@ class PacienteController extends Controller
 
     public function updateCita(Request $request)
     {
-        Cita::find($request->get('id'))->update(['hora' => $request->get('hora'), 'fecha' => $request->get('fecha')]);
+        $message=([
+            'fecha.date' => 'Datos Incorrectos',
+            'fecha.after' => 'Datos Incorrectos',
+            'hora.regex' => 'Datos Incorrectos',
+        ]);
+
+        $request->validate([
+            'fecha' => 'required|date|after:yesterday',
+            'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
+        ],$message);
+
+        $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
+
+        Cita::find($request->get('id'))->update(['fechaHora' => $timestamp]);
 
         session()->flash('editada', 'La cita ha sido editada correctamente');
         return redirect('/pacientes/agenda')->with('success');
