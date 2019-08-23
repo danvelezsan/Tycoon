@@ -23,31 +23,37 @@
 	        		<p></p>
 	        	</div>
 	        	<div class="card-body">
-		            <table class="table table-hover">
-		  				<thead class="thead-light">
-		    				<tr>
-		    					<th scope="col" style="text-align:center">Id</th>
-		    					<th scope="col" style="text-align:center">Especialidad</th>
-						      	<th scope="col" style="text-align:center">Fecha</th>
-						      	<th scope="col" style="text-align:center"></th>
-		    				</tr>
-				  		</thead>
-				  		<tbody>
-				  			@foreach($ordenes as $orden)
-				  				<tr>
-				  					<th style="text-align:center">{{ $orden -> id }}</th>
-				  					<td style="text-align:center">{{ $orden -> especialidad }}</td>
-				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($orden->fecha)->format('d/m/Y') }}</td>
-				  					<td style="text-align:center">
-				  						<form action="{{ route('pacientes.agendarCitaEspecialista', $orden->id)}}" method="post">
-               						 		@csrf
-                  							<button class="btn btn-outline-info" type="submit">Agendar cita con médico especialista</button>
-                					   </form>
-				  					</td>
-				  				</tr>
-				  			@endforeach
-		  				</tbody>
-					</table>
+	        		@if ($ordenes->isEmpty())
+    					<div class="alert alert-secondary">	
+							<strong>No hay ordenes registradas</strong>
+						</div>
+					@else
+			            <table class="table table-hover">
+			  				<thead class="thead-light">
+			    				<tr>
+			    					<th scope="col" style="text-align:center">Id</th>
+			    					<th scope="col" style="text-align:center">Especialidad</th>
+							      	<th scope="col" style="text-align:center">Fecha</th>
+							      	<th scope="col" style="text-align:center"></th>
+			    				</tr>
+					  		</thead>
+					  		<tbody>
+					  			@foreach($ordenes as $orden)
+					  				<tr>
+					  					<th style="text-align:center">{{ $orden -> id }}</th>
+					  					<td style="text-align:center">{{ $orden -> especialidad }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($orden->fecha)->format('d/m/Y') }}</td>
+					  					<td style="text-align:center">
+					  						<form action="{{ route('pacientes.agendarCitaEspecialista', $orden->id)}}" method="post">
+	               						 		@csrf
+	                  							<button class="btn btn-outline-info" type="submit">Agendar cita con médico especialista</button>
+	                					   </form>
+					  					</td>
+					  				</tr>
+					  			@endforeach
+			  				</tbody>
+						</table>
+					@endif
 				</div>
 			</div>
         </div>

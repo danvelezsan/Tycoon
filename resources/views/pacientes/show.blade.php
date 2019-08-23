@@ -39,36 +39,42 @@
 	        		<p></p>
 	        	</div>
 	        	<div class="card-body">
-		            <table class="table table-hover">
-		  				<thead class="thead-light">
-		    				<tr>
-						      	<th scope="col" style="text-align:center">Cédula</th>
-						      	<th scope="col" style="text-align:center">Nombre</th>
-						      	<th scope="col" style="text-align:center">Apellidos</th>
-						      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
-						      	<th scope="col" style="text-align:center">Género</th>
-						      	<th scope="col" style="text-align:center"></th>
-		    				</tr>
-				  		</thead>
-				  		<tbody>
-				  			@foreach($pacientes as $paciente)
-				  				<tr>
-				  					<th style="text-align:center">{{ $paciente -> cedula }}</th>
-				  					<td style="text-align:center">{{ $paciente -> nombre }}</td>
-				  					<td style="text-align:center">{{ $paciente -> apellidos }}</td>
-				  					<td style="text-align:center">{{ \Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
-				  					<td style="text-align:center">{{ $paciente -> genero }}</td>
-				  					<td style="text-align:center">
-				  						<form action="{{ route('pacientes.destroy', $paciente->cedula)}}" method="post">
-               						 		@csrf
-                  							@method('DELETE')
-                  							<button class="btn btn-outline-danger" type="submit">Eliminar</button>
-                					   </form>
-				  					</td>
-				  				</tr>
-				  			@endforeach
-		  				</tbody>
-					</table>
+	        		@if ($pacientes->isEmpty())
+    					<div class="alert alert-secondary">	
+							<strong>No hay pacientes registrados</strong>
+						</div>
+					@else
+			            <table class="table table-hover">
+			  				<thead class="thead-light">
+			    				<tr>
+							      	<th scope="col" style="text-align:center">Cédula</th>
+							      	<th scope="col" style="text-align:center">Nombre</th>
+							      	<th scope="col" style="text-align:center">Apellidos</th>
+							      	<th scope="col" style="text-align:center">Fecha de nacimiento</th>
+							      	<th scope="col" style="text-align:center">Género</th>
+							      	<th scope="col" style="text-align:center"></th>
+			    				</tr>
+					  		</thead>
+					  		<tbody>
+					  			@foreach($pacientes as $paciente)
+					  				<tr>
+					  					<th style="text-align:center">{{ $paciente -> cedula }}</th>
+					  					<td style="text-align:center">{{ $paciente -> nombre }}</td>
+					  					<td style="text-align:center">{{ $paciente -> apellidos }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }}</td>
+					  					<td style="text-align:center">{{ $paciente -> genero }}</td>
+					  					<td style="text-align:center">
+					  						<form action="{{ route('pacientes.destroy', $paciente->cedula)}}" method="post">
+	               						 		@csrf
+	                  							@method('DELETE')
+	                  							<button class="btn btn-outline-danger" type="submit">Eliminar</button>
+	                					   </form>
+					  					</td>
+					  				</tr>
+					  			@endforeach
+			  				</tbody>
+						</table>
+					@endif
 				</div>
 			</div>
         </div>

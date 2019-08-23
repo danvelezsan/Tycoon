@@ -17,7 +17,7 @@ class CreateCitasTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->integer('idOrden')->nullable();
             $table->integer('cedulaPaciente');
-            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes');
+            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes')->onDelete('cascade');
             $table->string('nombrePaciente');
             $table->integer('cedulaMedico');
             $table->string('nombreMedico');
