@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('pacientes')->insert([
             'cedula' => 2,
-            'nombre' => "Taladromuelas",
+            'nombre' => "Paciento",
             'apellidos' => "App",
             'fecha_nacimiento' => Carbon::parse('2000-01-01'),
             'genero' => "Masculino",
@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt(12345678),
         ]);
         DB::table('role_user')->insert([
-            'role_id' => 2,
+            'role_id' => 4,
             'user_id' => 2
         ]);
         DB::table('role_user')->insert([
@@ -149,7 +149,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 3
         ]);
         DB::table('role_user')->insert([
-            'role_id' => 4,
+            'role_id' => 2,
             'user_id' => 4
         ]);
     }
