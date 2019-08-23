@@ -25,12 +25,8 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <input id="cedulaPaciente" type="hidden" value='{{$cedulaPaciente}}' name="cedulaPaciente">
-                            </div>
-                        </div>
+                        
+                        <input id="cedulaPaciente" type="hidden" value='{{$cedulaPaciente}}' name="cedulaPaciente">
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

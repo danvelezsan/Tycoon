@@ -21,11 +21,7 @@
                     <form method="POST" action="{{ route('pacientes.updateCita') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <input id="id" type="hidden" name="id" value="{{ $id }}">
-                            </div>
-                        </div>
+                        <input id="id" type="hidden" name="id" value="{{ $id }}">
 
                         <div class="form-group row">
                             <label for="fecha" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de la cita') }}</label>
