@@ -78,7 +78,7 @@ class PacienteController extends Controller
         if ($citasPaciente->isEmpty()) {
             $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
             $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get()->toArray();
-            $medico = $medico[0];
+            $medico = $medico[array_rand($medico)];
 
             $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
             $nombrePaciente = $nombrePaciente[0] -> nombre;
