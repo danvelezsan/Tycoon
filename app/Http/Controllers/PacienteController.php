@@ -68,18 +68,19 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedulaMedico' => 'required|exists:users,cedula|numeric',
+            'cedulaMedico' => 'required|exists:medico_generals,cedula|numeric',
             'fecha' => 'required|date|after:yesterday',
             'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
         ],$message);
 
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
-        $medico = DB::table('medico_generals')->whereNotIn('cedulaMedico', DB::table('citas')->where('fechaHora', '=', $timestamp)->get());
+        $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
+        $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get();
 
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
-        $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
+        $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $medico[0] -> cedula)->get();
         $nombreMedico = $nombreMedico[0] -> nombre;
 
 
@@ -87,7 +88,7 @@ class PacienteController extends Controller
             'idOrden' => NULL,
             'cedulaPaciente' => Auth::user()->cedula,
             'nombrePaciente' => $nombrePaciente,
-            'cedulaMedico' => $request->get('cedulaMedico'),
+            'cedulaMedico' => $medico[0] -> cedula,
             'nombreMedico' => $nombreMedico,
             'fechaHora' => $timestamp,
         ]);
@@ -109,23 +110,26 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedulaMedico' => 'required|exists:users,cedula|numeric',
+            'cedulaMedico' => 'required|exists:medico_especialistas,cedula|numeric',
             'fecha' => 'required|date|after:yesterday',
             'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
         ],$message);
 
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
+        $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
+        $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get();
+
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
-        $nombreMedico = MedicoEspecialista::select('nombre')->where('cedula', '=', $request->get('cedulaMedico'))->get();
+        $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $medico[0] -> cedula)->get();
         $nombreMedico = $nombreMedico[0] -> nombre;
 
         $cita = new Cita([
             'idOrden' => $request->get('idOrden'),
             'cedulaPaciente' => Auth::user()->cedula,
             'nombrePaciente' => $nombrePaciente,
-            'cedulaMedico' => $request->get('cedulaMedico'),
+            'cedulaMedico' => $medico[0] -> cedula,
             'nombreMedico' => $nombreMedico,
             'fechaHora' => $timestamp,
         ]);
