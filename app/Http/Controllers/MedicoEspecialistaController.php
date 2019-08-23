@@ -36,7 +36,7 @@ class MedicoEspecialistaController extends Controller
     {
         $cita = Cita::find($id);
         $cedulaPaciente = $cita -> cedulaPaciente;
-        $especialidades = Especialidad::all();
+        $especialidades = MedicoEspecialista::select('especialidad')->distinct('especialidad')->get();
         return view('medicosespecialistas.generarOrden', compact('especialidades', 'cedulaPaciente'));
     }
 

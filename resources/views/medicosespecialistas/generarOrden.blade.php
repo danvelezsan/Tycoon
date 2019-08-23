@@ -20,7 +20,7 @@
                             <div class=" col-md-6">
                                 <select name="especialidad" required id="especialidad" class="form-control">
                                 @foreach($especialidades as $especialidad)
-                                        <option value="{{ $especialidad -> nombre }}">{{ $especialidad -> nombre }}</option>
+                                        <option value="{{ $especialidad -> especialidad }}">{{ $especialidad -> especialidad }}</option>
                                 @endforeach
                                 </select>
                             </div>
