@@ -13,6 +13,7 @@ use App\MedicoEspecialista;
 use App\User;
 use App\Orden;
 use App\Cita;
+use Carbon\Carbon;
 
 class PacienteController extends Controller
 {
@@ -72,7 +73,9 @@ class PacienteController extends Controller
             'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
         ],$message);
 
+        $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
+        $medico = DB::table('medico_generals')->whereNotIn('cedulaMedico', DB::table('citas')->where('fechaHora', '=', $timestamp)->get());
 
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
@@ -86,8 +89,7 @@ class PacienteController extends Controller
             'nombrePaciente' => $nombrePaciente,
             'cedulaMedico' => $request->get('cedulaMedico'),
             'nombreMedico' => $nombreMedico,
-            'fecha' => $request->get('fecha'),
-            'hora' => $request->get('hora'),
+            'fechaHora' => $timestamp,
         ]);
         $cita->save();
 
