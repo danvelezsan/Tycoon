@@ -221,7 +221,8 @@ class PacienteController extends Controller
     {
         $message=([
             'cedula.unique' => 'Paciente Ya Existente',
-            'cedula.numeric' => 'Datos Incorrectos',
+            'cedula.integer' => 'Datos Incorrectos',
+            'cedula.gt' => 'Datos Incorrectos',
             'nombre.string' => 'Datos Incorrectos',
             'apellidos.string' => 'Datos Incorrectos',
             'fecha_nacimiento.date' => 'Datos Incorrectos',
@@ -232,7 +233,7 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,cedula|numeric',
+            'cedula' => 'required|unique:users,cedula|integer|gt:0',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',

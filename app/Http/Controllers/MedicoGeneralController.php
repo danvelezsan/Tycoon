@@ -91,7 +91,8 @@ class MedicoGeneralController extends Controller
         $message=([
             'cedula.unique' => 'Medico Ya Existente',
             'tarjeta_profesional.unique' => 'Tarjeta Profesional Ya Registrada',
-            'cedula.numeric' => 'Datos Incorrectos',
+            'cedula.integer' => 'Datos Incorrectos',
+            'cedula.gt' => 'Datos Incorrectos',
             'nombre.string' => 'Datos Incorrectos',
             'apellidos.string' => 'Datos Incorrectos',
             'fecha_nacimiento.date' => 'Datos Incorrectos',
@@ -99,17 +100,17 @@ class MedicoGeneralController extends Controller
             'fecha_nacimiento.after' => 'Datos Incorrectos',
             'genero.string' => 'Datos Incorrectos',
             'genero.in' => 'Datos Incorrectos',
-            'tarjeta_profesional.numeric' => 'Datos Incorrectos',
+            'tarjeta_profesional.integer' => 'Datos Incorrectos',
             'universidad.string' => 'Datos Incorrectos',
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,cedula|numeric',
+            'cedula' => 'required|unique:users,cedula|integer|gt:0',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',
             'genero' => 'required|string|in:Masculino, Femenino',
-            'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|numeric',
+            'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|integer',
             'universidad' => 'required|string',
             'contrasena' => 'required|string|confirmed',
         ],$message);
