@@ -112,11 +112,11 @@ class PacienteController extends Controller
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
         $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
-        $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get();
+        $medico = DB::table('medico_especialistas')->where('especialidad', '=', $request ->get('especialidad'))->whereNotIn('cedula', $citas)->get();
 
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
-        $nombreMedico = MedicoGeneral::select('nombre')->where('cedula', '=', $medico[0] -> cedula)->get();
+        $nombreMedico = MedicoEspecialista::select('nombre')->where('cedula', '=', $medico[0] -> cedula)->get();
         $nombreMedico = $nombreMedico[0] -> nombre;
 
         $cita = new Cita([
