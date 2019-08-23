@@ -102,6 +102,7 @@ class MedicoGeneralController extends Controller
             'genero.in' => 'Datos Incorrectos',
             'tarjeta_profesional.integer' => 'Datos Incorrectos',
             'universidad.string' => 'Datos Incorrectos',
+            'contrasena.min' => 'Datos Incorrectos',
         ]);
 
         $request->validate([
@@ -112,7 +113,7 @@ class MedicoGeneralController extends Controller
             'genero' => 'required|string|in:Masculino, Femenino',
             'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|integer',
             'universidad' => 'required|string',
-            'contrasena' => 'required|string|confirmed',
+            'contrasena' => 'required|string|confirmed|min:8',
         ],$message);
 
         $user = new User([

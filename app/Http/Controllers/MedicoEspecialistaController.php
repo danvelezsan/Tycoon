@@ -118,6 +118,7 @@ class MedicoEspecialistaController extends Controller
             'universidad.string' => 'Datos Incorrectos',
             'dirConsultorio.string' => 'Datos Incorrectos',
             'especialidad.string' => 'Datos Incorrectos',
+            'contrasena.min' => 'Datos Incorrectos',
         ]);
 
         $request->validate([
@@ -130,7 +131,7 @@ class MedicoEspecialistaController extends Controller
             'universidad' => 'required|string',
             'dirConsultorio' => 'required|unique:medico_especialistas|string',
             'especialidad' => 'required|string',
-            'contrasena' => 'required|string|confirmed',
+            'contrasena' => 'required|string|confirmed|min:8',
         ],$message);
 
         $user = new User([

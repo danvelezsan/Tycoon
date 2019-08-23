@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         DB::table('users')->insert([
             'cedula' => 1,
             'nombre' => "Admin",
@@ -95,6 +97,60 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('universidads')->insert([
             'nombre' => "Universidad del Norte",
+        ]);
+        DB::table('pacientes')->insert([
+            'cedula' => 2,
+            'nombre' => "Taladromuelas",
+            'apellidos' => "App",
+            'fecha_nacimiento' => Carbon::parse('2000-01-01'),
+            'genero' => "Masculino",
+        ]);
+        DB::table('medico_generals')->insert([
+            'cedula' => 3,
+            'nombre' => "Dr Papitas",
+            'apellidos' => "App",
+            'fecha_nacimiento' => Carbon::parse('2000-01-01'),
+            'genero' => "Masculino",
+            'tarjeta_profesional' => "3",
+            'universidad' => 'Universidad Pontificia Javeriana',
+        ]);
+        DB::table('medico_especialistas')->insert([
+            'cedula' => 4,
+            'nombre' => "Taladromuelas",
+            'apellidos' => "App",
+            'fecha_nacimiento' => Carbon::parse('2000-01-01'),
+            'genero' => "Masculino",
+            'tarjeta_profesional' => "3",
+            'dirConsultorio' => 'calle 1',
+            'especialidad' => 'Psiquiatria',
+            'universidad' => 'Universidad de Antioquia',
+        ]);
+        DB::table('users')->insert([
+            'cedula' => 2,
+            'nombre' => "Paciento",
+            'password' => bcrypt(12345678),
+        ]);
+        DB::table('users')->insert([
+            'cedula' => 3,
+            'nombre' => "Dr Papitas",
+            'password' => bcrypt(12345678),
+        ]);
+        DB::table('users')->insert([
+            'cedula' => 4,
+            'nombre' => "Taladromuelas",
+            'password' => bcrypt(12345678),
+        ]);
+        DB::table('role_user')->insert([
+            'role_id' => 2,
+            'user_id' => 2
+        ]);
+        DB::table('role_user')->insert([
+            'role_id' => 3,
+            'user_id' => 3
+        ]);
+        DB::table('role_user')->insert([
+            'role_id' => 4,
+            'user_id' => 4
         ]);
     }
 }
