@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\MedicoGeneral;
+use App\MedicoEspecialista;
 use App\Universidad;
 use App\Especialidad;
 use App\Orden;
@@ -36,7 +37,7 @@ class MedicoGeneralController extends Controller
     {
         $cita = Cita::find($id);
         $cedulaPaciente = $cita -> cedulaPaciente;
-        $especialidades = Especialidad::all();
+        $especialidades = MedicoEspecialista::select('especialidad')->distinct('especialidad')->get();
         return view('medicosgenerales.generarOrden', compact('especialidades', 'cedulaPaciente'));
     }
 

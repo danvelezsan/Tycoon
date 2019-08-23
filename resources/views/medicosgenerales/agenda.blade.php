@@ -29,11 +29,6 @@
 			        		<div class="col-sm-9">
 			        			<h4 style="color:white;">Agenda</h4>
 				       		</div>
-			        		<div class="col-sm-3">
-			        			<div class="float-right">
-			        				<button onclick="window.location='#'" type="button" class="btn btn-secondary">My button</button>
-			        			</div>
-			        		</div>
 		        		</div>
 	        		</div>
 	        		<p></p>
@@ -62,8 +57,8 @@
 					  					<th style="text-align:center">{{ $cita -> id }}</th>
 					  					<td style="text-align:center">{{ $cita -> nombrePaciente }}</td>
 					  					<td style="text-align:center">{{ $cita -> cedulaPaciente }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->hora)->format('H:i:s') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('d/m/Y') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('H:i:s') }}</td>
 					  					<td style="text-align:center">
 					  						<form action="{{ route('medicosGenerales.generarOrden', $cita->id)}}" method="post">
 	               						 		@csrf

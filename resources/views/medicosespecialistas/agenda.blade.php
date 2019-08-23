@@ -62,8 +62,8 @@
 					  					<th style="text-align:center">{{ $cita -> id }}</th>
 					  					<td style="text-align:center">{{ $cita -> nombrePaciente }}</td>
 					  					<td style="text-align:center">{{ $cita -> cedulaPaciente }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->hora)->format('H:i:s') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('d/m/Y') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('H:i:s') }}</td>
 					  					<td style="text-align:center">
 					  						<form action="{{ route('medicosEspecialistas.generarOrden', $cita->id)}}" method="post">
 	               						 		@csrf
