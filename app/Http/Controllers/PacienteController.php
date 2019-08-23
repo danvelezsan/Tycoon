@@ -38,7 +38,7 @@ class PacienteController extends Controller
 
     public function agenda()
     {
-        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fecha', 'hora')->where([['cedulaPaciente', '=', Auth::user()->cedula],['fecha', '>=', date("Y-m-d H:i:s")]])->get();
+        $citas = Cita::select('id', 'idOrden', 'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'fechaHora')->where([['cedulaPaciente', '=', Auth::user()->cedula],['fechaHora', '>=', date("Y-m-d H:i:s")]])->get();
         return view('pacientes.agenda')->with('citas', $citas);
     }
 
@@ -58,6 +58,21 @@ class PacienteController extends Controller
 
     public function storeCitaGeneral(Request $request)
     {
+        $message=([
+            'cedula.exists' => 'Medico Inexistente',
+            'cedula.numeric' => 'Datos Incorrectos',
+            'fecha.date' => 'Datos Incorrectos',
+            'fecha.after' => 'Datos Incorrectos',
+            'hora.regex' => 'Datos Incorrectos',
+        ]);
+
+        $request->validate([
+            'cedulaMedico' => 'required|exists:users,cedula|numeric',
+            'fecha' => 'required|date|after:yesterday',
+            'hora' => array('required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]|[0-9]):(0[0-9]|3[0-9])$/')
+        ],$message);
+
+
 
         $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
         $nombrePaciente = $nombrePaciente[0] -> nombre;
@@ -158,12 +173,12 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,id|numeric',
+            'cedula' => 'required|unique:users,cedula|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',
             'genero' => 'required|string|in:Masculino, Femenino',
-            'contrasena' => 'required|string',
+            'contrasena' => 'required|string|confirmed',
         ],$message);
 
         $user = new User([

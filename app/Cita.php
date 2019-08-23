@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cita extends Model
 {
     protected $fillable = [
-        'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'idOrden', 'fecha','hora',
+        'cedulaPaciente', 'nombrePaciente', 'cedulaMedico', 'nombreMedico', 'idOrden', 'fechaHora',
     ];
 
     protected $casts = [

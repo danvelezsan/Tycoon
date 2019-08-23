@@ -103,14 +103,14 @@ class MedicoGeneralController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,id|numeric',
+            'cedula' => 'required|unique:users,cedula|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',
             'genero' => 'required|string|in:Masculino, Femenino',
             'tarjeta_profesional' => 'required|unique:medico_generals|unique:medico_especialistas|numeric',
             'universidad' => 'required|string',
-            'contrasena' => 'required|string',
+            'contrasena' => 'required|string|confirmed',
         ],$message);
 
         $user = new User([

@@ -42,10 +42,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="contrasena-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}</label>
+                            <label for="contrasena_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contrasena-confirm" type="password" class="form-control" name="contrasena-confirm" required autocomplete="new-contrasena" placeholder="Confirme la constraseña">
+                                <input id="contrasena_confirmation" type="password" class="form-control" name="contrasena_confirmation" required autocomplete="new_contrasena" placeholder="Confirme la constraseña">
                             </div>
                         </div>
 

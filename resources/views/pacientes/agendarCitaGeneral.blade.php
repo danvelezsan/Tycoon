@@ -29,7 +29,7 @@
                             <label for="fecha" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de la cita') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fecha" type="date" class="form-control @error('fecha') is-invalid @enderror" name="fecha" value="{{ old('fecha') }}" required autocomplete="fecha" autofocus placeholder="Ingrese la fecha">
+                                <input id="fecha" type="date" min={{ date('Y-m-d') }} class="form-control @error('fecha') is-invalid @enderror" name="fecha" value="{{ old('fecha') }}" required autocomplete="fecha" autofocus placeholder="Ingrese la fecha">
 
                                 @error('fecha')
                                     <span class="invalid-feedback" role="alert">

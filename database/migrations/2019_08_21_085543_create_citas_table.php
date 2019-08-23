@@ -21,8 +21,7 @@ class CreateCitasTable extends Migration
             $table->string('nombrePaciente');
             $table->integer('cedulaMedico');
             $table->string('nombreMedico');
-            $table->date('fecha');
-            $table->time('hora');
+            $table->datetime('fechaHora');
             $table->timestamps();
         });
     }

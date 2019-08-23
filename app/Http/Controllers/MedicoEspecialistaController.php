@@ -120,7 +120,7 @@ class MedicoEspecialistaController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,id|numeric',
+            'cedula' => 'required|unique:users,cedula|numeric',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',
@@ -129,7 +129,7 @@ class MedicoEspecialistaController extends Controller
             'universidad' => 'required|string',
             'dirConsultorio' => 'required|unique:medico_especialistas|string',
             'especialidad' => 'required|string',
-            'contrasena' => 'required|string',
+            'contrasena' => 'required|string|confirmed',
         ],$message);
 
         $user = new User([
