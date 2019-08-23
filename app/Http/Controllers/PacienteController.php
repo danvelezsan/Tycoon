@@ -51,10 +51,11 @@ class PacienteController extends Controller
 
     public function agendarCitaEspecialista($id)
     {
-        $orden = Orden::find($id);
-        $especialidad = $orden->especialidad;
+        $idOrden = Orden::find($id);
+        $especialidad = $idOrden->especialidad;
+        $idOrden = $idOrden->id;
         $medicos = MedicoEspecialista::select('cedula', 'nombre')->where('especialidad', '=', $especialidad)->get();
-        return view('pacientes.agendarCitaEspecialista', compact('medicos', 'orden', 'especialidad'));
+        return view('pacientes.agendarCitaEspecialista', compact('medicos', 'idOrden', 'especialidad'));
     }
 
     public function storeCitaGeneral(Request $request)
@@ -72,28 +73,39 @@ class PacienteController extends Controller
 
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
-        $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
-        $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get()->toArray();
-        $medico = $medico[array_rand($medico)];
+        $citasPaciente = Cita::select('id', 'fechaHora')->where([['fechaHora', '=', $timestamp], ['cedulaPaciente', '=', Auth::user()->cedula]])->get();
 
-        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
-        $nombrePaciente = $nombrePaciente[0] -> nombre;
-        $nombreMedico = $medico -> nombre;
+        if ($citasPaciente->isEmpty()) {
+            $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
+            $medico = DB::table('medico_generals')->whereNotIn('cedula', $citas)->get()->toArray();
+            $medico = $medico[array_rand($medico)];
+
+            $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
+            $nombrePaciente = $nombrePaciente[0] -> nombre;
+            $nombreMedico = $medico -> nombre;
 
 
-        $cita = new Cita([
-            'idOrden' => NULL,
-            'cedulaPaciente' => Auth::user()->cedula,
-            'nombrePaciente' => $nombrePaciente,
-            'cedulaMedico' => $medico -> cedula,
-            'nombreMedico' => $nombreMedico,
-            'fechaHora' => $timestamp,
-        ]);
-        $cita->save();
+            $cita = new Cita([
+                'idOrden' => NULL,
+                'cedulaPaciente' => Auth::user()->cedula,
+                'nombrePaciente' => $nombrePaciente,
+                'cedulaMedico' => $medico -> cedula,
+                'nombreMedico' => $nombreMedico,
+                'fechaHora' => $timestamp,
+            ]);
+            $cita->save();
 
-        session()->flash('agendada', 'La cita ha sido agendada correctamente');
+            session()->flash('agendada', 'La cita ha sido agendada correctamente');
 
-        return redirect('/pacientes/agenda')->with('success');
+            return redirect('/pacientes/agenda')->with('success');
+        }else{
+            $medicos = MedicoGeneral::select('cedula', 'nombre')->get();
+            session()->flash('cita', 'Ya tienes una cita agendada a esa fecha y hora');
+
+            return view('pacientes.agendarCitaGeneral')->with('medicos', $medicos);
+        }
+
+       
     }
 
     public function storeCitaEspecialista(Request $request)
@@ -111,31 +123,43 @@ class PacienteController extends Controller
 
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
-        $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
-        $medico = DB::table('medico_especialistas')->where('especialidad', '=', $request ->get('especialidad'))->whereNotIn('cedula', $citas)->get()->toArray();
-        $medico = $medico[array_rand($medico)];
+        $citasPaciente = Cita::select('id', 'fechaHora')->where([['fechaHora', '=', $timestamp], ['cedulaPaciente', '=', Auth::user()->cedula]])->get();
+
+        if ($citasPaciente->isEmpty()) {
+            $citas = DB::table('citas')->select('cedulaMedico')->where('fechaHora', '=', $timestamp);
+            $medico = DB::table('medico_especialistas')->where('especialidad', '=', $request ->get('especialidad'))->whereNotIn('cedula', $citas)->get()->toArray();
+            $medico = $medico[array_rand($medico)];
 
 
-        $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
-        $nombrePaciente = $nombrePaciente[0] -> nombre;
-        $nombreMedico = $medico -> nombre;
+            $nombrePaciente = Paciente::select('nombre')->where('cedula', '=', Auth::user()->cedula)->get();
+            $nombrePaciente = $nombrePaciente[0] -> nombre;
+            $nombreMedico = $medico -> nombre;
 
-        $cita = new Cita([
-            'idOrden' => $request->get('idOrden'),
-            'cedulaPaciente' => Auth::user()->cedula,
-            'nombrePaciente' => $nombrePaciente,
-            'cedulaMedico' => $medico -> cedula,
-            'nombreMedico' => $nombreMedico,
-            'fechaHora' => $timestamp,
-        ]);
+            $cita = new Cita([
+                'idOrden' => $request->get('idOrden'),
+                'cedulaPaciente' => Auth::user()->cedula,
+                'nombrePaciente' => $nombrePaciente,
+                'cedulaMedico' => $medico -> cedula,
+                'nombreMedico' => $nombreMedico,
+                'fechaHora' => $timestamp,
+            ]);
 
-        Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
+            Orden::find($request->get('idOrden'))->update(['verificacionUsada' => true]);
 
-        $cita->save();
+            $cita->save();
 
-        session()->flash('agendada', 'La cita ha sido agendada correctamente');
+            session()->flash('agendada', 'La cita ha sido agendada correctamente');
 
-        return redirect('/pacientes/agenda')->with('success');
+            return redirect('/pacientes/agenda')->with('success');
+        }else{
+            $idOrden = $request->get('idOrden');
+            $especialidad = $request->get('especialidad');
+            $medicos = $request->get('medicos');
+
+            session()->flash('cita', 'Ya tienes una cita agendada a esa fecha y hora');
+            return view('pacientes.agendarCitaEspecialista', compact('medicos', 'idOrden', 'especialidad'));
+        }
+
     }
 
     public function editCita($id)
@@ -158,10 +182,17 @@ class PacienteController extends Controller
 
         $timestamp = $request->get('fecha') . ' ' . $request->get('hora');
 
-        Cita::find($request->get('id'))->update(['fechaHora' => $timestamp]);
+        $citasPaciente = Cita::select('id', 'fechaHora')->where([['fechaHora', '=', $timestamp], ['cedulaPaciente', '=', Auth::user()->cedula]])->get();
 
-        session()->flash('editada', 'La cita ha sido editada correctamente');
-        return redirect('/pacientes/agenda')->with('success');
+        if ($citasPaciente->isEmpty()) {
+            Cita::find($request->get('id'))->update(['fechaHora' => $timestamp]);
+
+            session()->flash('editada', 'La cita ha sido editada correctamente');
+            return redirect('/pacientes/agenda')->with('success');
+        }else{
+            session()->flash('cita', 'Ya tienes una cita agendada a esa fecha y hora');
+            return view('pacientes.editarCita')->with('id', $request->get('id'));
+        } 
     }
 
     public function destroyCita($id)
@@ -190,7 +221,8 @@ class PacienteController extends Controller
     {
         $message=([
             'cedula.unique' => 'Paciente Ya Existente',
-            'cedula.numeric' => 'Datos Incorrectos',
+            'cedula.integer' => 'Datos Incorrectos',
+            'cedula.gt' => 'Datos Incorrectos',
             'nombre.string' => 'Datos Incorrectos',
             'apellidos.string' => 'Datos Incorrectos',
             'fecha_nacimiento.date' => 'Datos Incorrectos',
@@ -201,7 +233,7 @@ class PacienteController extends Controller
         ]);
 
         $request->validate([
-            'cedula' => 'required|unique:users,cedula|numeric',
+            'cedula' => 'required|unique:users,cedula|integer|gt:0',
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'fecha_nacimiento' => 'required|date|before:tomorrow|after:01/01/1900',

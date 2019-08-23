@@ -4,6 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if (session()->has('cita'))
+            <div class="container">
+                <div class="alert alert-secondary alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                    <span class="glyphicon glyphicon-ok"><strong>¡Ya tienes una cita agendada a esa fecha y hora!</strong>
+                </div>
+            </div>
+            @endif
             <div class="card">
                 <div class="card-header">
                     {{ __('Agendar Cita con Especialista') }} 
@@ -49,7 +57,13 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <input id="idOrden" type="hidden" name="idOrden" value="{{ $orden->id }}">
+                                <input id="idOrden" type="hidden" name="idOrden" value="{{ $idOrden }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input id="medicos" type="hidden" name="medicos" value="{{ $medicos }}">
                             </div>
                         </div>
 
