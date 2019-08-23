@@ -22,7 +22,7 @@ class CreateMedicoGeneralsTable extends Migration
             $table->string('genero');
             $table->integer('tarjeta_profesional')->unique();
             $table->string('universidad');
-            $table->foreign('universidad')->references('nombre')->on('universidads');
+            $table->foreign('universidad')->references('nombre')->on('universidads')->onDelete('cascade');
             $table->timestamps();
         });
     }

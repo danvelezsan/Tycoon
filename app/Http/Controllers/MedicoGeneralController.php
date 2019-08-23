@@ -183,12 +183,13 @@ class MedicoGeneralController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = User::where('cedula', $id);
         $medico = MedicoGeneral::where('cedula', $id);
 
+        DB::table('role_user')->where('user_id', $id)->delete();
         $user->delete();
         $medico->delete();
-        DB::table('role_user')->where('user_id', $id)->delete();
+        
 
         session()->flash('eliminado', 'El médico general se ha eliminado correctamente');
 

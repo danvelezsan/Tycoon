@@ -19,7 +19,7 @@ class CreateOrdensTable extends Migration
             $table->date('fecha');
             $table->string('especialidad');
             $table->integer('cedulaPaciente');
-            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes');
+            $table->foreign('cedulaPaciente')->references('cedula')->on('pacientes')->onDelete('cascade');
             $table->integer('cedulaMedico');
             $table->timestamps();
         });
