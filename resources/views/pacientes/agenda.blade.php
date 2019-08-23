@@ -68,8 +68,8 @@
 					  				<tr>
 					  					<th style="text-align:center">{{ $cita -> id }}</th>
 					  					<td style="text-align:center">{{ $cita -> nombreMedico }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
-					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->hora)->format('H:i:s') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('d/m/Y') }}</td>
+					  					<td style="text-align:center">{{ \Carbon\Carbon::parse($cita->fechaHora)->format('H:i:s') }}</td>
 					  					<td style="text-align:center">
 					  						<form action="{{ route('pacientes.editCita', $cita->id)}}" method="post">
 	               						 		@csrf
