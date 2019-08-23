@@ -276,13 +276,12 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('cedula', $id);
+        $user = User::find($id);
         $paciente = Paciente::where('cedula', $id);
 
-        DB::table('role_user')->where('user_id', $id)->delete();
-        $paciente->delete();
         $user->delete();
-        
+        $paciente->delete();
+        DB::table('role_user')->where('user_id', $id)->delete();
 
         session()->flash('eliminado', 'El paciente se ha eliminado correctamente');
 
